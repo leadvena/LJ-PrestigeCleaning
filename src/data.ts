@@ -13,7 +13,7 @@ export const servicesData: Service[] = [
       "HEPA-filter air dusting & carpet sterilization"
     ],
     iconName: "Baby",
-    imageUrl: "/src/assets/images/daycare_clean_1780019670393.png"
+    imageUrl: "/images/daycare_clean_1780019670393.png"
   },
   {
     id: "airbnb-cleaning",
@@ -27,7 +27,7 @@ export const servicesData: Service[] = [
       "Odor removal and sparkling high-end detail inspection"
     ],
     iconName: "HomeStar",
-    imageUrl: "/src/assets/images/airbnb_turnover_1780019691921.png"
+    imageUrl: "/images/airbnb_turnover_1780019691921.png"
   },
   {
     id: "residential-cleaning",
@@ -41,7 +41,7 @@ export const servicesData: Service[] = [
       "Custom routine maid maintenance (Weekly, Bi-weekly, Monthly)"
     ],
     iconName: "Sparkles",
-    imageUrl: "/src/assets/images/residential_clean_1780019711990.png"
+    imageUrl: "/images/residential_clean_1780019711990.png"
   },
   {
     id: "junk-removal",
@@ -55,7 +55,7 @@ export const servicesData: Service[] = [
       "We Beat Any Price! Bring us any competitor estimate"
     ],
     iconName: "Truck",
-    imageUrl: "/src/assets/images/junk_removal_1780019730037.png"
+    imageUrl: "/images/junk_removal_1780019730037.png"
   }
 ];
 
