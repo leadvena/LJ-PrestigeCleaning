@@ -18,6 +18,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import Header from "./components/Header";
+import Logo from "./components/Logo";
 import { servicesData, trustBadges, reviewsData, faqsData } from "./data";
 import { EstimateFormData } from "./types";
 
@@ -148,11 +149,8 @@ export default function App() {
 
         <div className="max-w-4xl mx-auto w-full text-center z-10 flex flex-col items-center gap-6 md:gap-8 animate-fade-up">
           {/* Stylized Logo in center */}
-          <div className="flex flex-col items-center gap-2 select-none mb-2">
-            <div className="w-16 h-16 rounded-[14px] bg-brand-crimson border border-brand-crimson/50 flex items-center justify-center shadow-[0_8px_32px_rgba(179,0,0,0.35)] animate-pulse-glow">
-              <span className="font-sans font-black text-2xl text-white tracking-tighter">L&J</span>
-            </div>
-            <p className="font-sans font-bold text-xs tracking-[0.2em] text-[#888] uppercase mt-2">Prestige cleaning</p>
+          <div className="flex flex-col items-center select-none mb-2">
+            <Logo className="h-16 w-auto" />
           </div>
 
           <span className="section-label">Colorado's Prestige Standard</span>

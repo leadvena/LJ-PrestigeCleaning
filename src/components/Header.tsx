@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Phone, Menu, X } from "lucide-react";
+import Logo from "./Logo";
 
 const navLinks = [
   { id: "home", label: "Home" },
@@ -77,57 +78,7 @@ export default function Header() {
               className="flex items-center gap-2.5 cursor-pointer group"
               aria-label="L&J Prestige Home"
             >
-              <div
-                style={{
-                  width: 36,
-                  height: 36,
-                  background: "#B30000",
-                  borderRadius: 8,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                  transition: "background 200ms ease",
-                }}
-                className="group-hover:bg-brand-crimson-dark"
-              >
-                <span
-                  style={{
-                    fontFamily: "Outfit, sans-serif",
-                    fontWeight: 900,
-                    fontSize: 14,
-                    color: "#fff",
-                    letterSpacing: "-0.03em",
-                  }}
-                >
-                  L&amp;J
-                </span>
-              </div>
-              <div>
-                <p
-                  style={{
-                    fontFamily: "Outfit, sans-serif",
-                    fontWeight: 800,
-                    fontSize: 15,
-                    color: "#F5F5F5",
-                    lineHeight: 1.1,
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  Prestige
-                </p>
-                <p
-                  style={{
-                    fontFamily: "JetBrains Mono, monospace",
-                    fontSize: 9,
-                    color: "#B30000",
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Cleaning &amp; Hauling
-                </p>
-              </div>
+              <Logo className="h-10 w-auto md:h-12" />
             </button>
 
             {/* Desktop Nav */}
