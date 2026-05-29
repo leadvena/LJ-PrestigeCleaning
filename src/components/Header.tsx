@@ -78,7 +78,7 @@ export default function Header() {
               className="flex items-center gap-2.5 cursor-pointer group"
               aria-label="L&J Prestige Home"
             >
-              <Logo className="h-14 w-auto md:h-18" />
+              <Logo className="w-16 h-16 md:w-22 md:h-22" />
             </button>
 
             {/* Desktop Nav */}

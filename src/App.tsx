@@ -139,8 +139,8 @@ export default function App() {
       <Header />
 
       {/* ─── Hero Section ─── */}
-      <section 
-        id="home" 
+      <section
+        id="home"
         className="relative px-4 sm:px-6 lg:px-8 py-24 md:py-36 flex flex-col items-center justify-center min-h-[95vh] overflow-hidden bg-cover bg-center"
         style={{ backgroundImage: "url('/images/hero_bg_1780019650230.png')" }}
       >
@@ -150,7 +150,7 @@ export default function App() {
         <div className="max-w-4xl mx-auto w-full text-center z-10 flex flex-col items-center gap-6 md:gap-8 animate-fade-up">
           {/* Stylized Logo in center */}
           <div className="flex flex-col items-center select-none mb-2">
-            <Logo className="h-32 sm:h-48 md:h-64 lg:h-72 w-auto" />
+            <Logo className="h-28 sm:h-36 md:h-44 w-auto" />
           </div>
 
           <span className="section-label">Colorado's Prestige Standard</span>
@@ -203,7 +203,7 @@ export default function App() {
 
           {/* Bento Grid */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-            
+
             {/* Card 1: Daycare (Tall) */}
             <div className="md:col-span-7 bg-brand-surface border border-brand-border rounded-[20px] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-[#333] transition-all duration-300 min-h-[380px]">
               <div className="absolute inset-0 z-0 opacity-15 group-hover:opacity-25 transition-opacity duration-300">
@@ -373,7 +373,7 @@ export default function App() {
                   alt="Spotless luxury kitchen"
                   className="w-full h-full object-cover pointer-events-none"
                 />
-                
+
                 {/* Visual Glow Layer */}
                 <div className="absolute top-[20%] right-[15%] pointer-events-none animate-pulse-glow">
                   <Sparkles className="w-8 h-8 text-white fill-white" />
@@ -428,7 +428,7 @@ export default function App() {
       {/* ─── Trust / Promise Section ─── */}
       <section id="about" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg relative">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-          
+
           {/* Left: Frame Photo */}
           <div className="lg:col-span-6">
             <div className="relative rounded-[24px] overflow-hidden border border-brand-border aspect-[4/3] bg-brand-surface">
@@ -447,7 +447,7 @@ export default function App() {
             <h2 className="display-heading text-3xl sm:text-4xl md:text-5xl">
               Colorado's Most Trusted Cleaning Crew.
             </h2>
-            
+
             <p className="body-text">
               We are Letty &amp; Jozette, running this family business with our boys. Every client gets direct co-founder quality assurance. No franchise markups, no shortcuts.
             </p>
@@ -473,7 +473,7 @@ export default function App() {
       {/* ─── Reviews Grid & Pricing Banner ─── */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0a0a] border-t border-brand-border">
         <div className="max-w-7xl mx-auto">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
             <div className="lg:col-span-4">
               <span className="section-label">Client Reviews</span>
@@ -580,7 +580,7 @@ export default function App() {
       {/* ─── Contact & Estimate Form ─── */}
       <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg border-t border-brand-border relative">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
-          
+
           {/* Left Column: Direct Call Cards */}
           <div className="lg:col-span-5 flex flex-col justify-between gap-8">
             <div className="flex flex-col gap-4">
@@ -599,7 +599,7 @@ export default function App() {
                 <div className="flex justify-between items-start">
                   <div>
                     <span className="text-[10px] font-mono text-brand-crimson uppercase tracking-widest font-bold">Co-Founder</span>
-                    <h4 className="text-lg font-bold text-white mt-1">Letty Silva</h4>
+                    <h4 className="text-lg font-bold text-white mt-1">Letty</h4>
                   </div>
                   <span className="text-[9px] font-mono bg-brand-crimson/10 border border-brand-crimson/30 text-brand-crimson px-2.5 py-0.5 rounded font-bold uppercase tracking-wider">
                     Hablo Español
@@ -656,11 +656,10 @@ export default function App() {
 
               {status.type && (
                 <div
-                  className={`p-4 rounded-xl mb-6 flex items-start gap-3 border text-sm ${
-                    status.type === "success"
-                      ? "bg-emerald-950/40 border-emerald-500/30 text-emerald-300"
-                      : "bg-red-950/40 border-red-500/30 text-red-300"
-                  }`}
+                  className={`p-4 rounded-xl mb-6 flex items-start gap-3 border text-sm ${status.type === "success"
+                    ? "bg-emerald-950/40 border-emerald-500/30 text-emerald-300"
+                    : "bg-red-950/40 border-red-500/30 text-red-300"
+                    }`}
                 >
                   {status.type === "success" ? (
                     <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
@@ -833,7 +832,7 @@ export default function App() {
                 {servicesData.find((s) => s.id === formData.serviceType)?.title || "Services"}
               </span>
             </h3>
-            
+
             <p className="text-xs text-brand-grey mb-6 leading-relaxed">
               We beat any competitor price. Let us know a few details, and we will coordinate your quote instantly.
             </p>
