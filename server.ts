@@ -12,6 +12,9 @@ async function startServer() {
   // Parse JSON payloads
   app.use(express.json());
 
+  // Serve static files from the public folder directly (robust fallback for dev & prod)
+  app.use(express.static(path.join(process.cwd(), "public")));
+
   // API Health check
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok" });
