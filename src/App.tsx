@@ -26,6 +26,7 @@ import Header from "./components/Header";
 import Logo from "./components/Logo";
 import { servicesData, trustBadges, reviewsData, faqsData } from "./data";
 import { EstimateFormData } from "./types";
+import heroBgImg from "./assets/images/hero_bg_1780019650230.png";
 
 export default function App() {
   const [formData, setFormData] = useState<EstimateFormData>({
@@ -181,7 +182,7 @@ export default function App() {
         {/* High-end cinematic hero background banner */}
         <div className="absolute inset-0 z-0 select-none">
           <img
-            src="/images/hero_bg_1780019650230.png"
+            src={heroBgImg}
             alt="L&J Prestige Luxury House Background"
             className="w-full h-full object-cover opacity-20"
             referrerPolicy="no-referrer"
