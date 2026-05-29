@@ -16,43 +16,109 @@ export default async function handler(req: any, res: any) {
   const apiKey = process.env.RESEND_API_KEY;
   const recipient = process.env.ADMIN_EMAIL || process.env.RECEIVER_EMAIL || "mercuritesolutions@gmail.com";
 
+  const serviceLabels: Record<string, string> = {
+    "daycare-cleaning": "Preschool & Daycare Cleaning",
+    "airbnb-cleaning": "Airbnb Turnover Cleaning",
+    "residential-cleaning": "Residential House Deep Clean",
+    "junk-removal": "Commercial & Residential Junk Removal",
+    "other": "Other / Custom Cleaning Service"
+  };
+  const formattedService = serviceLabels[serviceType] || serviceType;
+
   const emailHtml = `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #1a1a1a; background-color: #111111; color: #f5f5f5;">
-      <div style="text-align: center; border-bottom: 2px solid #C0392B; padding-bottom: 20px;">
-        <h2 style="color: #F39C12; margin: 0; font-size: 24px;">L&J PRESTIGE CLEANING</h2>
-        <p style="color: #cccccc; margin: 5px 0 0 0;">New Free Estimate / Booking Request</p>
-      </div>
-      <div style="padding: 20px 0;">
-        <p style="font-size: 16px;">You have received a new booking or cleaning estimate submission:</p>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-          <tr>
-            <td style="padding: 8px 0; border-bottom: 1px solid #222222; font-weight: bold; width: 140px; color: #999;">Customer Name:</td>
-            <td style="padding: 8px 0; border-bottom: 1px solid #222222; color: #f5f5f5;">${name}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; border-bottom: 1px solid #222222; font-weight: bold; color: #999;">Phone Number:</td>
-            <td style="padding: 8px 0; border-bottom: 1px solid #222222;"><a href="tel:${phone}" style="color: #E67E22; text-decoration: none; font-weight: bold;">${phone}</a></td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; border-bottom: 1px solid #222222; font-weight: bold; color: #999;">Email:</td>
-            <td style="padding: 8px 0; border-bottom: 1px solid #222222;"><a href="mailto:${email || ""}" style="color: #C0392B; text-decoration: none;">${email || "Not Provided"}</a></td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; border-bottom: 1px solid #222222; font-weight: bold; color: #999;">Requested Service:</td>
-            <td style="padding: 8px 0; border-bottom: 1px solid #222222;"><span style="background-color: #C0392B; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; text-transform: uppercase;">${serviceType}</span></td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; border-bottom: 1px solid #222222; font-weight: bold; color: #999;">Contact Preference:</td>
-            <td style="padding: 8px 0; border-bottom: 1px solid #222222; color: #f5f5f5;">${preferredContact || "No preference"}</td>
-          </tr>
-        </table>
+    <div style="background-color: #080808; padding: 32px 16px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #FFFFFF; min-height: 100%;">
+      <div style="max-width: 580px; margin: 0 auto; background-color: #121212; border: 1px solid #27272A; border-top: 4px solid #B30000; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
         
-        <p style="font-weight: bold; margin-top: 25px; color: #F39C12; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Message & Project Scope:</p>
-        <div style="background-color: #1a1a1a; padding: 15px; border-left: 4px solid #C0392B; color: #f5f5f5; border-radius: 4px; white-space: pre-wrap; line-height: 1.5;">${message || "No additional comments provided."}</div>
-      </div>
-      <div style="text-align: center; font-size: 11px; color: #666; border-top: 1px solid #222222; padding-top: 20px; margin-top: 20px;">
-        Received on: ${new Date().toLocaleString()}<br/>
-        L&J Prestige Cleaning & Junk Removal • Colorado, USA
+        <!-- Header Section -->
+        <div style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid #1F1F22;">
+          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.25em; color: #B30000; margin-bottom: 8px;">
+            L&J PRESTIGE CLEANING LLC
+          </div>
+          <h2 style="font-size: 22px; font-weight: 700; margin: 0; color: #FFFFFF; letter-spacing: -0.02em;">
+            New Estimate Request
+          </h2>
+          <p style="font-size: 12px; color: #A1A1AA; margin: 6px 0 0 0;">
+            Received from ljprestigecleaningllc.com
+          </p>
+        </div>
+
+        <!-- Main Content -->
+        <div style="padding: 32px;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 12px 0; border-bottom: 1px solid #1F1F22; font-size: 13px; font-weight: 700; color: #A1A1AA; text-transform: uppercase; letter-spacing: 0.05em; width: 150px;">
+                Client Name
+              </td>
+              <td style="padding: 12px 0; border-bottom: 1px solid #1F1F22; font-size: 15px; font-weight: 500; color: #FFFFFF;">
+                ${name}
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 0; border-bottom: 1px solid #1F1F22; font-size: 13px; font-weight: 700; color: #A1A1AA; text-transform: uppercase; letter-spacing: 0.05em;">
+                Phone Number
+              </td>
+              <td style="padding: 12px 0; border-bottom: 1px solid #1F1F22; font-size: 15px; font-weight: 700; color: #FFFFFF;">
+                <a href="tel:${phone}" style="color: #B30000; text-decoration: none;">${phone}</a>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 0; border-bottom: 1px solid #1F1F22; font-size: 13px; font-weight: 700; color: #A1A1AA; text-transform: uppercase; letter-spacing: 0.05em;">
+                Email Address
+              </td>
+              <td style="padding: 12px 0; border-bottom: 1px solid #1F1F22; font-size: 15px; color: #FFFFFF;">
+                ${email ? `<a href="mailto:${email}" style="color: #FFFFFF; text-decoration: underline;">${email}</a>` : '<span style="color: #52525B; font-style: italic;">Not provided</span>'}
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 0; border-bottom: 1px solid #1F1F22; font-size: 13px; font-weight: 700; color: #A1A1AA; text-transform: uppercase; letter-spacing: 0.05em;">
+                Service Type
+              </td>
+              <td style="padding: 12px 0; border-bottom: 1px solid #1F1F22; font-size: 14px; color: #FFFFFF;">
+                <span style="display: inline-block; background-color: #B30000; color: #FFFFFF; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">
+                  ${formattedService}
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 0; border-bottom: 1px solid #1F1F22; font-size: 13px; font-weight: 700; color: #A1A1AA; text-transform: uppercase; letter-spacing: 0.05em;">
+                Contact Via
+              </td>
+              <td style="padding: 12px 0; border-bottom: 1px solid #1F1F22; font-size: 15px; color: #FFFFFF;">
+                ${preferredContact || 'No preference'}
+              </td>
+            </tr>
+          </table>
+
+          <!-- Project details -->
+          <div style="margin-top: 32px;">
+            <h4 style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #A1A1AA; margin: 0 0 12px 0;">
+              Message & Project Scope
+            </h4>
+            <div style="background-color: #18181B; border: 1px solid #27272A; border-left: 3px solid #B30000; border-radius: 12px; padding: 18px; color: #E4E4E7; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${message || 'No details provided.'}</div>
+          </div>
+
+          <!-- Quick Action -->
+          <table style="width: 100%; margin-top: 32px; border-collapse: collapse;">
+            <tr>
+              <td>
+                <a href="tel:${phone}" style="display: block; text-align: center; background-color: #B30000; color: #FFFFFF; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 24px; border-radius: 100px; text-decoration: none;">
+                  Call Client Now
+                </a>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 24px 32px 32px 32px; background-color: #0E0E10; border-top: 1px solid #1F1F22; text-align: center;">
+          <p style="font-size: 11px; color: #71717A; margin: 0 0 8px 0; line-height: 1.5;">
+            L&J Prestige Cleaning LLC · Colorado Springs, Denver, Pueblo
+          </p>
+          <p style="font-size: 10px; color: #52525B; margin: 0;">
+            Received on ${new Date().toLocaleString('en-US', { timeZone: 'America/Denver' })} (Mountain Time)
+          </p>
+        </div>
+
       </div>
     </div>
   `;
