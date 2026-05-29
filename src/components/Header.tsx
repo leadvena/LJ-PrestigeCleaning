@@ -78,7 +78,15 @@ export default function Header() {
               className="flex items-center gap-2.5 cursor-pointer group"
               aria-label="L&J Prestige Home"
             >
-              <Logo variant="header" className="w-18 h-18 md:w-24 md:h-24" />
+              <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#121212] border border-brand-border relative flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:border-brand-crimson/40 shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
+                {/* Subtle gradient at the bottom 1/3 */}
+                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-[#B30000]/25 via-[#B30000]/10 to-transparent pointer-events-none z-0"></div>
+                
+                {/* Dynamic radial glow on hover */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(179,0,0,0.15),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"></div>
+
+                <Logo variant="header" className="w-9 h-9 md:w-10 md:h-10 z-10 transition-transform duration-300 group-hover:scale-105" />
+              </div>
             </button>
 
             {/* Desktop Nav */}
