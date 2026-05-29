@@ -135,7 +135,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-textured min-h-screen text-brand-offwhite relative overflow-x-hidden pt-[110px]">
+    <div className="bg-textured min-h-screen text-brand-offwhite relative overflow-x-hidden">
       {/* Hidden SEO entity paragraph for crawlers & AI citation engines */}
       <p className="sr-only">
         L&amp;J Prestige Cleaning LLC is a family-owned cleaning and junk removal company serving Colorado Springs, Denver Metro, Castle Rock, and Pueblo, Colorado.
@@ -147,7 +147,7 @@ export default function App() {
       {/* ─── Hero Section ─── */}
       <section
         id="home"
-        className="relative px-4 sm:px-6 lg:px-8 py-24 md:py-36 flex flex-col items-center justify-center min-h-[95vh] overflow-hidden bg-cover bg-center"
+        className="relative px-4 sm:px-6 lg:px-8 pt-36 pb-24 md:py-36 flex flex-col items-center justify-center min-h-[95vh] overflow-hidden bg-cover bg-center scroll-mt-0"
         style={{ backgroundImage: "url('/images/hero_bg_1780019650230.png')" }}
       >
         {/* Dark overlay */}
@@ -197,7 +197,7 @@ export default function App() {
       </section>
 
       {/* ─── Services Grid (Bento Box Layout) ─── */}
-      <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg relative z-10">
+      <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg relative z-10 scroll-mt-28">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16 animate-fade-up">
             <span className="section-label">What We Do</span>
@@ -432,7 +432,7 @@ export default function App() {
       </section>
 
       {/* ─── Trust / Promise Section ─── */}
-      <section id="about" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg relative">
+      <section id="about" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg relative scroll-mt-28">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 
           {/* Left: Frame Photo */}
@@ -557,7 +557,7 @@ export default function App() {
       </section>
 
       {/* ─── Frequently Asked Questions ─── */}
-      <section id="faq" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg">
+      <section id="faq" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg scroll-mt-28">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
             <span className="section-label">Common Inquiries</span>
@@ -592,7 +592,7 @@ export default function App() {
       </section>
 
       {/* ─── Contact & Estimate Form ─── */}
-      <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg border-t border-brand-border relative">
+      <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg border-t border-brand-border relative scroll-mt-28">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
 
           {/* Left Column: Direct Call Cards */}
