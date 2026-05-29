@@ -1,0 +1,6 @@
+{
+  "name": "L&J Prestige Cleaning",
+  "description": "Premium day-care, Airbnb, residential cleaning, and junk removal service in Colorado, USA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
