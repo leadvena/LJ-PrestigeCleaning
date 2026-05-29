@@ -83,7 +83,7 @@ export default function Header() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(179,0,0,0.15),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"></div>
 
                 {/* Logo placed behind the gradient overlay */}
-                <Logo variant="header" className="w-9 h-9 md:w-10 md:h-10 z-0 transition-transform duration-300 group-hover:scale-105" />
+                <Logo variant="header" className="w-11 h-11 md:w-12 md:h-12 z-0 transition-transform duration-300 group-hover:scale-105" />
 
                 {/* Subtle gradient at the bottom 1/3 (sits on top of the logo) */}
                 <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-[#B30000]/30 via-[#B30000]/12 to-transparent pointer-events-none z-10"></div>
