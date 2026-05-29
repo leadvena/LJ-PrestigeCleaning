@@ -117,19 +117,52 @@ export const reviewsData: Review[] = [
 
 export const faqsData = [
   {
-    question: "Do you offer free estimates or on-site inspections?",
-    answer: "Absolutely! We provide virtual estimates via phone/photos and direct on-site physical evaluations throughout Colorado for free, with no obligation. Contact Letty or Jozette anytime."
+    question: "Do you offer free estimates for cleaning or junk removal in Colorado Springs?",
+    answer: "Yes! L&J Prestige Cleaning LLC provides free estimates for all cleaning and junk removal services in Colorado Springs, Denver Metro, Castle Rock, and Pueblo. Contact Letty at 719-250-1717 or submit our online form for a same-day response. No obligation, ever."
   },
   {
-    question: "How do you guarantee your 'We Beat Any Price' tagline?",
-    answer: "Present any active cleaning or junk removal quote from a licensed competitor in Colorado. We review the scope and beat their price safely while maintaining our premium standard of quality."
+    question: "What is the 'We Beat Any Price' guarantee?",
+    answer: "Present any active written cleaning or junk removal estimate from a licensed competitor in Colorado. We will review the scope and beat their price while maintaining our premium quality standard. This applies to Airbnb turnovers, daycare cleaning, residential cleans, and junk removal."
   },
   {
-    question: "Are your cleaning agents child and pet safe?",
-    answer: "Yes, especially for Daycare and Preschool turnover clients. We prioritize non-toxic, eco-friendly disinfectants that are free of harsh chemical fumes and residue, protecting kids and animals."
+    question: "Are your cleaning products safe for children and pets?",
+    answer: "Absolutely. We use 100% non-toxic, eco-friendly disinfectants that are free of harsh chemical fumes and residue. Our child-safe product line is especially important for our daycare and preschool clients. All products are also pet-friendly and leave no harmful traces."
   },
   {
-    question: "What geographical areas in Colorado do you cover?",
-    answer: "We cover the Front Range and surrounding regions, including Denver Metro, Castle Rock, Pueblo, Colorado Springs, and neighboring mountain residential hubs."
+    question: "What cities in Colorado do you service?",
+    answer: "We cover the entire Colorado Front Range including Colorado Springs, Denver Metro, Castle Rock, Pueblo, and surrounding mountain residential communities. Call 719-250-1717 to confirm availability in your specific area."
+  },
+  {
+    question: "What types of junk do you haul away?",
+    answer: "We haul almost everything — furniture, appliances, electronics, construction debris, yard waste, timber, estate cleanout items, and general household junk. We also handle full garage, basement, and attic purges. Items are sorted responsibly: donated, recycled, or hauled. We do not haul hazardous waste or chemicals."
+  },
+  {
+    question: "Can you do same-day or next-day junk removal?",
+    answer: "Yes! Same-day and next-day junk removal is available in Colorado Springs and surrounding areas based on crew availability. Call or text Jozette at 719-425-8551 and we will do our best to accommodate your timeline."
+  },
+  {
+    question: "Are you licensed and insured?",
+    answer: "Yes, L&J Prestige Cleaning LLC is a fully licensed LLC in Colorado and our crews operate with full insurance coverage. Our daycare cleaning services are compliant with Colorado Department of Early Childhood standards."
+  },
+  {
+    question: "Do you offer recurring cleaning schedules?",
+    answer: "Yes! We offer weekly, bi-weekly, and monthly recurring residential cleaning plans. Airbnb clients can set up automated turnover scheduling tied to their booking calendar. Recurring clients receive priority scheduling and a consistent team."
+  },
+  {
+    question: "What makes L&J Prestige different from franchise cleaning companies?",
+    answer: "L&J Prestige is family-owned and operated by Letty and Jozette — two co-founders who personally oversee every job. Unlike franchises with rotating staff and markup pricing, we offer direct co-founder accountability, bilingual service in English and Spanish, child-safe eco products, and a price-beat guarantee. No franchise markups, no shortcuts."
+  },
+  {
+    question: "Do you offer post-construction or move-out cleaning?",
+    answer: "Yes, we specialize in post-construction cleanup, renovation debris removal, and move-out deep cleaning. These services are available for both residential and commercial properties across Colorado Springs and Denver Metro."
+  },
+  {
+    question: "Is bilingual (Spanish) service available?",
+    answer: "Yes! Co-founder Letty is fully bilingual and coordinates all job details directly in Spanish. We proudly serve Colorado's Spanish-speaking communities with clear, direct communication. Letty habla Español para coordinar cada detalle."
+  },
+  {
+    question: "How do I book an Airbnb turnover cleaning in Colorado Springs?",
+    answer: "Call or text Letty at 719-250-1717 or submit our online estimate form. We sync with your Airbnb calendar, handle same-day checkout resets, wash and stage linens, restock amenities, perform damage checks, and send photographic updates after every turnover."
   }
 ];
+

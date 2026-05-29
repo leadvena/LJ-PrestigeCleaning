@@ -136,6 +136,12 @@ export default function App() {
 
   return (
     <div className="bg-textured min-h-screen text-brand-offwhite relative overflow-x-hidden pt-[110px]">
+      {/* Hidden SEO entity paragraph for crawlers & AI citation engines */}
+      <p className="sr-only">
+        L&amp;J Prestige Cleaning LLC is a family-owned cleaning and junk removal company serving Colorado Springs, Denver Metro, Castle Rock, and Pueblo, Colorado.
+        Founded by Letty and Jozette, we offer child-safe daycare sanitation, Airbnb turnover staging, residential deep cleaning, and same-day junk removal.
+        We beat any competitor price and provide bilingual service in English and Spanish. Call 719-250-1717 for a free estimate.
+      </p>
       <Header />
 
       {/* ─── Hero Section ─── */}
@@ -180,13 +186,13 @@ export default function App() {
             </button>
           </div>
 
-          {/* Coverage Towns */}
-          <div className="border-t border-brand-border/40 w-full max-w-md pt-6 mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs font-mono text-[#666]">
-            <span>[CO SPRINGS]</span>
-            <span>[DENVER METRO]</span>
-            <span>[CASTLE ROCK]</span>
-            <span>[PUEBLO]</span>
-          </div>
+          {/* Coverage Towns — keyword-rich service area strip */}
+          <nav aria-label="Service areas" className="border-t border-brand-border/40 w-full max-w-lg pt-6 mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs font-mono text-[#666]">
+            <span title="Cleaning & junk removal Colorado Springs CO">Colorado Springs, CO</span>
+            <span title="Cleaning service Denver Metro area">Denver Metro, CO</span>
+            <span title="House cleaning Castle Rock Colorado">Castle Rock, CO</span>
+            <span title="Junk removal Pueblo Colorado">Pueblo, CO</span>
+          </nav>
         </div>
       </section>
 
@@ -209,7 +215,7 @@ export default function App() {
               <div className="absolute inset-0 z-0 opacity-15 group-hover:opacity-25 transition-opacity duration-300">
                 <img
                   src="/images/daycare_clean_1780019670393.png"
-                  alt="Daycare cleaning details"
+                  alt="Child-safe preschool and daycare cleaning service Colorado Springs by L&J Prestige Cleaning LLC"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -250,7 +256,7 @@ export default function App() {
               <div className="absolute inset-0 z-0 opacity-15 group-hover:opacity-25 transition-opacity duration-300">
                 <img
                   src="/images/airbnb_turnover_1780019691921.png"
-                  alt="Airbnb staging"
+                  alt="Airbnb turnover cleaning and staging service Colorado Springs by L&J Prestige Cleaning LLC"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -281,7 +287,7 @@ export default function App() {
               <div className="absolute inset-0 z-0 opacity-15 group-hover:opacity-25 transition-opacity duration-300">
                 <img
                   src="/images/residential_clean_1780019711990.png"
-                  alt="Residential housekeeping"
+                  alt="Residential house deep cleaning service Colorado Springs by L&J Prestige Cleaning LLC"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -312,7 +318,7 @@ export default function App() {
               <div className="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 transition-opacity duration-300">
                 <img
                   src="/images/junk_removal_1780019730037.png"
-                  alt="Junk hauling"
+                  alt="Junk removal and hauling service Colorado Springs Castle Rock Pueblo by L&J Prestige Cleaning LLC"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -370,7 +376,7 @@ export default function App() {
               <div className="absolute inset-0 z-0 bg-brand-dark">
                 <img
                   src="/images/residential_clean_1780019711990.png"
-                  alt="Spotless luxury kitchen"
+                  alt="Spotless kitchen after professional deep cleaning in Colorado Springs"
                   className="w-full h-full object-cover pointer-events-none"
                 />
 
@@ -397,7 +403,7 @@ export default function App() {
                 >
                   <img
                     src="/images/residential_clean_1780019711990.png"
-                    alt="Dusty household kitchen"
+                    alt="Before: dirty kitchen before L&J Prestige Cleaning service in Colorado"
                     className="w-full h-full object-cover pointer-events-none filter grayscale contrast-90 brightness-50"
                   />
                   <div className="absolute bottom-6 left-6 z-10 px-4 py-2 bg-black/80 backdrop-blur-md rounded-xl border border-brand-border">
@@ -434,7 +440,7 @@ export default function App() {
             <div className="relative rounded-[24px] overflow-hidden border border-brand-border aspect-[4/3] bg-brand-surface">
               <img
                 src="/images/residential_clean_1780019711990.png"
-                alt="Immaculate living space room"
+                alt="Professional house cleaning service in Colorado Springs by L&J Prestige Cleaning LLC"
                 className="w-full h-full object-cover filter grayscale contrast-110 brightness-85"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-crimson/15 to-transparent pointer-events-none"></div>
@@ -450,6 +456,14 @@ export default function App() {
 
             <p className="body-text">
               We are Letty &amp; Jozette, running this family business with our boys. Every client gets direct co-founder quality assurance. No franchise markups, no shortcuts.
+            </p>
+
+            {/* GEO-optimized entity paragraph for AI engines + Google E-E-A-T */}
+            <p className="text-xs text-brand-grey leading-relaxed border-l-2 border-brand-crimson/50 pl-4 mt-2">
+              L&amp;J Prestige Cleaning LLC is a fully licensed, insured, family-owned cleaning and junk removal company based in Colorado Springs, Colorado.
+              We service Colorado Springs, Denver Metro, Castle Rock, and Pueblo with child-safe daycare sanitation,
+              Airbnb turnover cleaning, residential deep cleans, and same-day junk removal.
+              We beat any competitor price and offer bilingual service in English and Spanish.
             </p>
 
             <div className="flex flex-col mt-4">
@@ -791,10 +805,15 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-brand-border pb-12">
             <div className="flex flex-col gap-2">
-              <span className="font-extrabold text-xl tracking-tight text-white uppercase">L&amp;J Prestige</span>
+              <span className="font-extrabold text-xl tracking-tight text-white uppercase">L&amp;J Prestige Cleaning LLC</span>
               <p className="text-xs text-brand-grey max-w-sm">
-                Denver, Pueblo, and Colorado Springs premium sanitation and haulage. we beat any competitor quote.
+                Colorado Springs, Denver Metro, Castle Rock &amp; Pueblo. Premium cleaning and junk removal. We beat any competitor quote.
               </p>
+              <address className="text-xs text-[#444] not-italic mt-1">
+                <a href="tel:7192501717" className="hover:text-brand-crimson transition-colors">719-250-1717</a>
+                {" · "}
+                <span>Colorado Springs, CO</span>
+              </address>
             </div>
             <div className="flex gap-8 text-xs font-mono text-[#444]">
               <span>© {new Date().getFullYear()} L&amp;J Prestige</span>

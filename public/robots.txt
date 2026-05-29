@@ -1,0 +1,30 @@
+# robots.txt — L&J Prestige Cleaning LLC
+# https://ljprestigecleaningllc.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://ljprestigecleaningllc.com/sitemap.xml
+
+# AI Crawlers — Allow indexing for GEO/AIO visibility
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
