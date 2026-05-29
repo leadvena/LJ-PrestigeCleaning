@@ -32,7 +32,7 @@ async function startServer() {
     }
 
     const apiKey = process.env.RESEND_API_KEY;
-    const recipient = process.env.RECEIVER_EMAIL || "mercuritesolutions@gmail.com";
+    const recipient = process.env.ADMIN_EMAIL || process.env.RECEIVER_EMAIL || "mercuritesolutions@gmail.com";
 
     const emailHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #1a1a1a; background-color: #111111; color: #f5f5f5;">

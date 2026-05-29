@@ -138,56 +138,56 @@ export default function App() {
       <Header />
 
       {/* ─── Hero Section ─── */}
-      <section id="home" className="relative px-4 sm:px-6 lg:px-8 py-20 lg:py-32 flex flex-col justify-center min-h-[90vh] overflow-hidden hero-glow">
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
-          {/* Hero text */}
-          <div className="lg:col-span-7 flex flex-col gap-6 animate-slide-left">
-            <span className="section-label">Colorado's Prestige Standard</span>
-            
-            <h1 className="display-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
-              Your Home.<br />
-              <span className="text-[#ffffff]">Our Standard.</span>
-            </h1>
+      <section 
+        id="home" 
+        className="relative px-4 sm:px-6 lg:px-8 py-24 md:py-36 flex flex-col items-center justify-center min-h-[95vh] overflow-hidden bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/hero_bg_1780019650230.png')" }}
+      >
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/90 via-[#080808]/75 to-[#080808] z-0"></div>
 
-            <p className="body-text text-lg max-w-xl">
-              Uncompromising child-safe preschool sanitation, elite Airbnb staging, and swift commercial haulage. family-owned and custom detailed.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <a
-                href="tel:7192501717"
-                className="btn-crimson inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full text-base font-bold shadow-lg"
-              >
-                <Phone className="w-5 h-5" />
-                <span>Call Letty · 719.250.1717</span>
-              </a>
-              <button
-                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="btn-ghost px-8 py-4 rounded-full text-base font-bold"
-              >
-                Free Estimate
-              </button>
+        <div className="max-w-4xl mx-auto w-full text-center z-10 flex flex-col items-center gap-6 md:gap-8 animate-fade-up">
+          {/* Stylized Logo in center */}
+          <div className="flex flex-col items-center gap-2 select-none mb-2">
+            <div className="w-16 h-16 rounded-[14px] bg-brand-crimson border border-brand-crimson/50 flex items-center justify-center shadow-[0_8px_32px_rgba(179,0,0,0.35)] animate-pulse-glow">
+              <span className="font-sans font-black text-2xl text-white tracking-tighter">L&J</span>
             </div>
-
-            {/* Coverage Towns */}
-            <div className="border-t border-[#1a1a1a] pt-6 mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs font-mono text-[#555]">
-              <span>[CO SPRINGS]</span>
-              <span>[DENVER METRO]</span>
-              <span>[CASTLE ROCK]</span>
-              <span>[PUEBLO]</span>
-            </div>
+            <p className="font-sans font-bold text-xs tracking-[0.2em] text-[#888] uppercase mt-2">Prestige cleaning</p>
           </div>
 
-          {/* Hero Image (Tilted editorial frame) */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end animate-fade-in delay-200">
-            <div className="relative w-full max-w-[450px] aspect-[4/5] rounded-[20px] overflow-hidden border border-brand-border shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
-              <img
-                src="/images/hero_bg_1780019650230.png"
-                alt="Elite Colorado home layout"
-                className="w-full h-full object-cover filter grayscale contrast-115 brightness-90 hover:grayscale-0 transition-all duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/80 via-transparent to-transparent"></div>
-            </div>
+          <span className="section-label">Colorado's Prestige Standard</span>
+
+          <h1 className="display-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl max-w-3xl leading-tight">
+            Your Home.<br />
+            <span className="text-[#ffffff]">Our Standard.</span>
+          </h1>
+
+          <p className="body-text text-base sm:text-lg md:text-xl max-w-2xl text-[#ccc] leading-relaxed">
+            Uncompromising child-safe preschool sanitation, elite Airbnb staging, and swift commercial haulage. Family-owned and custom detailed.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto justify-center">
+            <a
+              href="tel:7192501717"
+              className="btn-crimson inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full text-base font-bold shadow-lg"
+            >
+              <Phone className="w-5 h-5 animate-pulse-glow" />
+              <span>Call Letty · 719.250.1717</span>
+            </a>
+            <button
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              className="btn-ghost px-8 py-4 rounded-full text-base font-bold bg-black/40 hover:bg-black/60"
+            >
+              Free Estimate
+            </button>
+          </div>
+
+          {/* Coverage Towns */}
+          <div className="border-t border-brand-border/40 w-full max-w-md pt-6 mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs font-mono text-[#666]">
+            <span>[CO SPRINGS]</span>
+            <span>[DENVER METRO]</span>
+            <span>[CASTLE ROCK]</span>
+            <span>[PUEBLO]</span>
           </div>
         </div>
       </section>
