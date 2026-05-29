@@ -1,8 +1,4 @@
 import { Service, TrustBadge, Review } from "./types";
-import daycareCleanImg from "./assets/images/daycare_clean_1780019670393.png";
-import airbnbTurnoverImg from "./assets/images/airbnb_turnover_1780019691921.png";
-import residentialCleanImg from "./assets/images/residential_clean_1780019711990.png";
-import junkRemovalImg from "./assets/images/junk_removal_1780019730037.png";
 
 export const servicesData: Service[] = [
   {
@@ -17,7 +13,7 @@ export const servicesData: Service[] = [
       "HEPA-filter air dusting & carpet sterilization"
     ],
     iconName: "Baby",
-    imageUrl: daycareCleanImg
+    imageUrl: "/images/daycare_clean_1780019670393.png"
   },
   {
     id: "airbnb-cleaning",
@@ -31,7 +27,7 @@ export const servicesData: Service[] = [
       "Odor removal and sparkling high-end detail inspection"
     ],
     iconName: "HomeStar",
-    imageUrl: airbnbTurnoverImg
+    imageUrl: "/images/airbnb_turnover_1780019691921.png"
   },
   {
     id: "residential-cleaning",
@@ -45,7 +41,7 @@ export const servicesData: Service[] = [
       "Custom routine maid maintenance (Weekly, Bi-weekly, Monthly)"
     ],
     iconName: "Sparkles",
-    imageUrl: residentialCleanImg
+    imageUrl: "/images/residential_clean_1780019711990.png"
   },
   {
     id: "junk-removal",
@@ -59,7 +55,7 @@ export const servicesData: Service[] = [
       "We Beat Any Price! Bring us any competitor estimate"
     ],
     iconName: "Truck",
-    imageUrl: junkRemovalImg
+    imageUrl: "/images/junk_removal_1780019730037.png"
   }
 ];
 

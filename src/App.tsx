@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Baby,
   Sparkles,
@@ -26,7 +26,6 @@ import Header from "./components/Header";
 import Logo from "./components/Logo";
 import { servicesData, trustBadges, reviewsData, faqsData } from "./data";
 import { EstimateFormData } from "./types";
-import heroBgImg from "./assets/images/hero_bg_1780019650230.png";
 
 export default function App() {
   const [formData, setFormData] = useState<EstimateFormData>({
@@ -46,6 +45,31 @@ export default function App() {
   }>({ type: null, message: "" });
 
   const [modalOpen, setModalOpen] = useState(false);
+
+  // Elite Before/After Interactive Visualizer
+  const [sliderPos, setSliderPos] = useState(50);
+  const [isDraggingSlider, setIsDraggingSlider] = useState(false);
+  const visualizerRef = useRef<HTMLDivElement>(null);
+
+  const handleVisualizerMove = (clientX: number) => {
+    if (!visualizerRef.current) return;
+    const rect = visualizerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setSliderPos(percentage);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches[0]) {
+      handleVisualizerMove(e.touches[0].clientX);
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (e.buttons === 1 || isDraggingSlider) {
+      handleVisualizerMove(e.clientX);
+    }
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -182,7 +206,7 @@ export default function App() {
         {/* High-end cinematic hero background banner */}
         <div className="absolute inset-0 z-0 select-none">
           <img
-            src={heroBgImg}
+            src="/images/hero_bg_1780019650230.png"
             alt="L&J Prestige Luxury House Background"
             className="w-full h-full object-cover opacity-20"
             referrerPolicy="no-referrer"
@@ -220,9 +244,21 @@ export default function App() {
             </span>
           </h1>
 
-          <p className="text-gray-400 font-sans text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
+          <p className="text-gray-400 font-sans text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-6">
             We deliver uncompromising sanitation and power-hauling across Colorado. From pristine, certified pet/child-safe preschools to lightning-fast Airbnb turnover checkouts.
           </p>
+
+          {/* Premium Family-Owned, Licensed & Insured Badges */}
+          <div className="flex flex-wrap justify-center items-center gap-3 mb-10">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-lg bg-brand-amber-start/5 border border-brand-amber-start/30 text-brand-amber-end font-sans text-xs font-semibold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 fill-brand-amber-start text-brand-amber-start" />
+              Small Family-Owned Business
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-lg bg-white/[0.02] border border-white/10 text-brand-offwhite font-sans text-xs font-semibold uppercase tracking-wider">
+              <ShieldCheck className="w-3.5 h-3.5 text-brand-crimson" />
+              100% Licensed &amp; Insured
+            </span>
+          </div>
 
           {/* Two Prominent Action-Trigger CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md mx-auto mb-12">
@@ -367,8 +403,9 @@ export default function App() {
                   </div>
 
                   <div className="pt-4 border-t border-brand-charcoal/50 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between mt-auto">
-                    <div className="text-xs font-mono font-medium text-brand-amber-start">
-                      ✨ Sparkle &amp; Sanitize Standard
+                    <div className="text-xs font-mono font-medium text-brand-amber-start flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-brand-amber-start fill-brand-amber-start" />
+                      <span>Prestige Sparkle &amp; Sanitize</span>
                     </div>
                     
                     <button
@@ -383,6 +420,110 @@ export default function App() {
 
               </div>
             ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* BEFORE & AFTER PRESTIGE VISUALIZER */}
+      <section className="py-24 relative bg-brand-dark border-b border-brand-charcoal overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-crimson/5 rounded-full blur-[140px] pointer-events-none"></div>
+        <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-brand-amber-start/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-amber-start/10 text-brand-amber-start font-mono text-xs font-black tracking-widest uppercase mb-4 border border-brand-amber-start/20">
+              <Sparkles className="w-3.5 h-3.5 fill-brand-amber-start text-brand-amber-start animate-pulse" />
+              <span>Interactive Prestige Showcase</span>
+            </div>
+            
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-white mb-4">
+              Witness Elegant <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-amber-start via-amber-400 to-brand-amber-end font-black">Transformation</span>
+            </h2>
+            <div className="h-1.5 w-20 bg-gradient-to-r from-brand-crimson to-brand-amber-start mx-auto rounded mb-6"></div>
+            
+            <p className="text-gray-400 text-sm sm:text-base md:text-lg">
+              Drag the golden slider with your finger or mouse to slide between the dusty, unsanitized environment and the pristine, high-end luxury L&amp;J Sparkle standard.
+            </p>
+          </div>
+
+          {/* Interactive Slider Container */}
+          <div className="max-w-4xl mx-auto">
+            <div 
+              id="before-after-visualizer"
+              ref={visualizerRef}
+              onMouseMove={handleMouseMove}
+              onTouchMove={handleTouchMove}
+              onMouseDown={() => setIsDraggingSlider(true)}
+              onMouseUp={() => setIsDraggingSlider(false)}
+              onMouseLeave={() => setIsDraggingSlider(false)}
+              onTouchStart={() => setIsDraggingSlider(true)}
+              onTouchEnd={() => setIsDraggingSlider(false)}
+              className="relative h-[280px] sm:h-[420px] md:h-[500px] w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(230,126,34,0.12)] border border border-white/[0.06] select-none cursor-ew-resize group"
+            >
+              {/* After Layer (Base - Beautiful Colorful & Sparkly) */}
+              <div className="absolute inset-0 z-0 bg-brand-dark">
+                <img 
+                  src="/images/residential_clean_1780019711990.png" 
+                  alt="Spotless clean modern residence kitchen" 
+                  className="w-full h-full object-cover pointer-events-none select-none"
+                  referrerPolicy="no-referrer"
+                />
+                
+                {/* Custom Overlay Sparkle Flares on the After Image for visual dopamine */}
+                <div className="absolute top-[20%] right-[15%] w-8 h-8 pointer-events-none animate-pulse opacity-80 z-10 text-brand-amber-end">
+                  <Sparkles className="w-full h-full fill-brand-amber-end text-brand-amber-end" />
+                </div>
+                <div className="absolute bottom-[30%] right-[35%] w-6 h-6 pointer-events-none animate-pulse opacity-70 z-10 text-brand-amber-start">
+                  <Sparkles className="w-full h-full fill-brand-amber-start text-brand-amber-start" />
+                </div>
+
+                {/* Status Badge right */}
+                <div className="absolute bottom-6 right-6 z-10 px-4 py-2 bg-black/85 backdrop-blur-md rounded-xl border border-brand-amber-start/30 shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
+                  <span className="flex items-center gap-1.5 text-xs text-brand-amber-end font-mono font-bold tracking-widest uppercase">
+                    <span className="w-2 h-2 rounded-full bg-brand-amber-start animate-ping"></span>
+                    L&amp;J PRESTIGE AFTER
+                  </span>
+                </div>
+              </div>
+
+              {/* Before Layer (Sliding overlay with heavy dark, dull sepia-grayscale filter) */}
+              <div 
+                className="absolute inset-y-0 left-0 overflow-hidden z-10 transition-all pointer-events-none"
+                style={{ width: `${sliderPos}%` }}
+              >
+                {/* Inner container with fixed full width so image doesn't compress */}
+                <div className="absolute inset-y-0 left-0 w-[280px] sm:w-[500px] md:w-[900px]" style={{ width: visualizerRef.current?.getBoundingClientRect().width || "100%" }}>
+                  <img 
+                    src="/images/residential_clean_1780019711990.png" 
+                    alt="Standard dirty household kitchen" 
+                    className="w-full h-full object-cover pointer-events-none select-none filter grayscale saturate-[40%] brightness-[0.45] sepia-[20%] blur-[1.2px]"
+                    referrerPolicy="no-referrer"
+                  />
+                  {/* Status Badge left */}
+                  <div className="absolute bottom-6 left-6 z-10 px-4 py-2 bg-brand-charcoal/90 backdrop-blur-md rounded-xl border border-white/5">
+                    <span className="text-xs text-gray-400 font-mono font-bold tracking-widest uppercase">
+                      BEFORE SERVICE (DULL)
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Slider Controller Divider Column */}
+              <div 
+                className="absolute inset-y-0 z-20 w-1 bg-gradient-to-b from-brand-crimson via-brand-amber-start to-brand-amber-end pointer-events-none shadow-[0_0_20px_rgba(230,126,34,0.6)]"
+                style={{ left: `${sliderPos}%` }}
+              >
+                {/* Draggable Circle Knob */}
+                <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-brand-dark border-2 border-brand-amber-start shadow-[0_0_25px_rgba(230,126,34,0.7)] flex items-center justify-center cursor-ew-resize group-hover:scale-110 transition-transform active:scale-95">
+                  <svg className="w-6 h-6 text-brand-amber-end animate-pulse" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l-4 4 4 4m8 0l4-4-4-4" />
+                  </svg>
+                </div>
+              </div>
+
+            </div>
           </div>
 
         </div>
@@ -440,10 +581,10 @@ export default function App() {
                 </h3>
                 <div className="space-y-4 text-gray-400 text-sm sm:text-base leading-relaxed">
                   <p>
-                    L&amp;J Prestige Cleaning and Junk Removal originated from a shared Colorado dream: built by <strong className="text-brand-offwhite">Letty</strong> and <strong className="text-brand-offwhite">Jozette</strong>, we set out to prove that premium detailing-quality sanitization doesn't require giant corporate franchise fees.
+                    L&amp;J Prestige is a proud <strong className="text-brand-amber-end">small family-owned and operated business</strong> built on dedication, luxury standards, and deep family trust. Founded by Letty, Jozette, and run actively alongside our <strong className="text-brand-offwhite">three incredible boys</strong>, we set out to deliver a bespoke, deep-cleaned prestige experience that commercial franchises simply cannot match.
                   </p>
                   <p>
-                    We live and serve locally. That means we don't treat jobs as transactions. To guarantee the highest health standards, we operate with a handpicked crew employing child-safe, pet-compliant non-toxic sanitation lines, and heavy-duty, clean state disposal solutions that outperform.
+                    Because we work together as a family, every home or facility we restore is treated with the level of extreme detail and care we would demand for our own loved ones. We employ strictly child-safe, pet-compliant non-toxic sanitation lines to safeguard your health while achieving a marvelous standard of deluxe, high-end brilliance.
                   </p>
                   <p>
                     We understand budgeting. That makes our <span className="text-brand-amber-start font-bold">"We Will Beat Any Price"</span> commitment real. Show us any competitor's quote and watch us match or beat it instantly without cutting a single corner.
@@ -458,6 +599,14 @@ export default function App() {
                   </h4>
                   <ul className="space-y-3">
                     <li className="flex items-center gap-2.5 text-sm text-gray-300">
+                      <CheckCircle2 className="w-4.5 h-4.5 text-brand-amber-start flex-shrink-0 animate-pulse" />
+                      <span className="font-semibold text-brand-amber-end">Proudly Small Family-Owned Business</span>
+                    </li>
+                    <li className="flex items-center gap-2.5 text-sm text-gray-300">
+                      <CheckCircle2 className="w-4.5 h-4.5 text-brand-amber-start flex-shrink-0 animate-pulse" />
+                      <span className="font-semibold text-brand-offwhite">100% Fully Licensed and Insured</span>
+                    </li>
+                    <li className="flex items-center gap-2.5 text-sm text-gray-300">
                       <CheckCircle2 className="w-4.5 h-4.5 text-brand-crimson flex-shrink-0" />
                       <span>Always free visual and physical estimates</span>
                     </li>
@@ -467,7 +616,7 @@ export default function App() {
                     </li>
                     <li className="flex items-center gap-2.5 text-sm text-gray-300">
                       <CheckCircle2 className="w-4.5 h-4.5 text-brand-crimson flex-shrink-0" />
-                      <span>Reliable turnover check-in standard</span>
+                      <span>Reliable turnover checkout standard</span>
                     </li>
                     <li className="flex items-center gap-2.5 text-sm text-gray-300">
                       <CheckCircle2 className="w-4.5 h-4.5 text-brand-crimson flex-shrink-0" />
@@ -494,7 +643,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
             <div>
-              <span className="inline-block bg-brand-amber-start text-black font-mono text-xs font-black tracking-widest uppercase px-3 py-1 rounded-md mb-3">
+              <span className="inline-block bg-brand-amber-start text-white font-mono text-xs font-black tracking-widest uppercase px-3 py-1 rounded-md mb-3">
                 No Obligation • Low Price Promise
               </span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-black uppercase text-brand-offwhite leading-tight">
@@ -519,11 +668,11 @@ export default function App() {
               
               <a
                 href="tel:3032422695"
-                className="flex items-center justify-center gap-3 bg-gradient-to-r from-brand-amber-start to-brand-amber-end hover:brightness-110 text-black py-4 px-6 rounded-xl font-display font-black shadow-lg transition-transform hover:-translate-y-0.5 active:translate-y-0"
+                className="flex items-center justify-center gap-3 bg-gradient-to-r from-brand-amber-start to-brand-amber-end hover:brightness-110 text-white py-4 px-6 rounded-xl font-display font-black shadow-lg transition-transform hover:-translate-y-0.5 active:translate-y-0"
               >
-                <Phone className="w-5 h-5 text-black" />
+                <Phone className="w-5 h-5 text-white" />
                 <div className="text-left">
-                  <span className="block text-[9px] text-black/70 uppercase font-sans font-bold leading-none">Jozette (English)</span>
+                  <span className="block text-[9px] text-white/80 uppercase font-sans font-bold leading-none">Jozette (English)</span>
                   <span className="font-mono text-base">303.242.2695</span>
                 </div>
               </a>
@@ -825,7 +974,7 @@ export default function App() {
                     id="submit-estimate-form"
                     type="submit"
                     disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-brand-amber-start to-brand-amber-end hover:brightness-110 text-black py-4 rounded-xl font-display font-black uppercase tracking-wider transition-all cursor-pointer disabled:opacity-50"
+                    className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-brand-amber-start to-brand-amber-end hover:brightness-110 text-white py-4 rounded-xl font-display font-black uppercase tracking-wider transition-all cursor-pointer disabled:opacity-50"
                   >
                     {loading ? (
                       <>
@@ -834,7 +983,7 @@ export default function App() {
                       </>
                     ) : (
                       <>
-                        <Send className="w-5 h-5 text-black" />
+                        <Send className="w-5 h-5 text-white" />
                         <span>Lock In My Estimate</span>
                       </>
                     )}
@@ -938,10 +1087,10 @@ export default function App() {
             element.scrollIntoView({ behavior: "smooth" });
           }
         }}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 bg-gradient-to-r from-brand-amber-start to-brand-amber-end hover:brightness-110 text-black font-display font-extrabold text-sm px-5 py-3.5 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 cursor-pointer border border-[#FFD08A]"
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 bg-gradient-to-r from-brand-amber-start to-brand-amber-end hover:brightness-110 text-white font-display font-extrabold text-sm px-5 py-3.5 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 cursor-pointer border border-brand-crimson/30"
         title="Get A Free Estimate"
       >
-        <Sparkles className="w-5 h-5 fill-black text-black animate-spin-slow" />
+        <Sparkles className="w-5 h-5 fill-white text-white animate-spin-slow" />
         <span>Free Estimate</span>
       </button>
 
@@ -1009,9 +1158,9 @@ export default function App() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-brand-amber-start to-brand-amber-end text-black py-3 rounded-xl font-display font-bold text-sm tracking-wide uppercase transition-all hover:opacity-90 disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-brand-amber-start to-brand-amber-end text-white py-3 rounded-xl font-display font-bold text-sm tracking-wide uppercase transition-all hover:opacity-90 disabled:opacity-50"
               >
-                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-4 h-4" />}
+                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-4 h-4 text-white" />}
                 <span>Send Estimate Request</span>
               </button>
             </form>

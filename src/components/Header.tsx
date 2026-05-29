@@ -47,10 +47,29 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-brand-dark/95 backdrop-blur-md py-2 border-b border-brand-charcoal shadow-xl"
-          : "bg-gradient-to-b from-brand-dark/80 to-transparent py-4"
+          ? "bg-brand-dark/95 backdrop-blur-md pb-1.5 border-b border-brand-charcoal shadow-xl"
+          : "bg-gradient-to-b from-brand-dark via-brand-dark/40 to-transparent pb-2"
       }`}
     >
+      {/* Elegant Deluxe Announcement Strip */}
+      <div className="bg-black/80 border-b border-brand-amber-start/10 py-1.5 px-4 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-[9px] sm:text-[10px] md:text-[11px] font-sans tracking-[0.2em] font-medium text-brand-amber-start uppercase">
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-crimson animate-pulse"></span>
+            Small Family-Owned Business
+          </span>
+          <span className="text-brand-charcoal select-none hidden sm:inline">•</span>
+          <span className="flex items-center gap-1.5 text-brand-offwhite">
+            <Sparkles className="w-3.5 h-3.5 text-brand-amber-end fill-brand-amber-end animate-pulse" />
+            100% Licensed &amp; Insured
+          </span>
+          <span className="text-brand-charcoal select-none hidden md:inline">•</span>
+          <span className="text-gray-400 hidden md:inline">
+            Colorado Springs • Denver Metro • Pueblo
+          </span>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           
@@ -142,7 +161,7 @@ export default function Header() {
 
       {/* Mobile Drawer (Polished overlay) */}
       <div
-        className={`fixed inset-0 top-[72px] bg-brand-dark/98 backdrop-blur-lg z-40 transition-transform duration-300 md:hidden border-t border-brand-charcoal ${
+        className={`fixed inset-0 top-[102px] bg-brand-dark/98 backdrop-blur-lg z-40 transition-transform duration-300 md:hidden border-t border-brand-charcoal ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
