@@ -150,7 +150,7 @@ export default function App() {
         <div className="max-w-4xl mx-auto w-full text-center z-10 flex flex-col items-center gap-6 md:gap-8 animate-fade-up">
           {/* Stylized Logo in center */}
           <div className="flex flex-col items-center select-none mb-2">
-            <Logo className="h-28 sm:h-36 md:h-44 w-auto" />
+            <Logo className="h-36 sm:h-48 md:h-56 w-auto" />
           </div>
 
           <span className="section-label">Colorado's Prestige Standard</span>
