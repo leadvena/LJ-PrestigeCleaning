@@ -25,6 +25,91 @@ export default async function handler(req: any, res: any) {
   };
   const formattedService = serviceLabels[serviceType] || serviceType;
 
+  // Generate dynamic contact action buttons based on preference
+  let actionButtonsHtml = "";
+  const primaryStyle = "display: block; text-align: center; background-color: #B30000; color: #FFFFFF; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 24px; border-radius: 100px; text-decoration: none;";
+  const secondaryStyle = "display: block; text-align: center; background-color: #1C1C1E; border: 1px solid #27272A; color: #E4E4E7; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 24px; border-radius: 100px; text-decoration: none;";
+
+  const lowerPref = (preferredContact || "").toLowerCase();
+  
+  if (lowerPref.includes("text") || lowerPref.includes("sms")) {
+    actionButtonsHtml = `
+      <table style="width: 100%; border-collapse: collapse; margin-top: 32px;">
+        <tr>
+          <td style="width: 50%; padding-right: 8px;">
+            <a href="sms:${phone}" style="${primaryStyle}">
+              💬 Text Client
+            </a>
+          </td>
+          <td style="width: 50%; padding-left: 8px;">
+            <a href="tel:${phone}" style="${secondaryStyle}">
+              📞 Call Client
+            </a>
+          </td>
+        </tr>
+        ${email ? `
+        <tr>
+          <td colspan="2" style="padding-top: 12px; text-align: center;">
+            <a href="mailto:${email}" style="color: #A1A1AA; font-size: 13px; text-decoration: underline;">
+              Or email client: ${email}
+            </a>
+          </td>
+        </tr>
+        ` : ''}
+      </table>
+    `;
+  } else if (lowerPref.includes("email") || lowerPref.includes("mail")) {
+    actionButtonsHtml = `
+      <table style="width: 100%; border-collapse: collapse; margin-top: 32px;">
+        <tr>
+          <td style="width: 50%; padding-right: 8px;">
+            ${email ? `
+            <a href="mailto:${email}" style="${primaryStyle}">
+              ✉️ Email Client
+            </a>
+            ` : `
+            <a href="tel:${phone}" style="${primaryStyle}">
+              📞 Call Client
+            </a>
+            `}
+          </td>
+          <td style="width: 50%; padding-left: 8px;">
+            <a href="sms:${phone}" style="${secondaryStyle}">
+              💬 Text Client
+            </a>
+          </td>
+        </tr>
+      </table>
+    `;
+  } else {
+    // Default call is primary, text is secondary
+    actionButtonsHtml = `
+      <table style="width: 100%; border-collapse: collapse; margin-top: 32px;">
+        <tr>
+          <td style="width: 50%; padding-right: 8px;">
+            <a href="tel:${phone}" style="${primaryStyle}">
+              📞 Call Client
+            </a>
+          </td>
+          <td style="width: 50%; padding-left: 8px;">
+            <a href="sms:${phone}" style="${secondaryStyle}">
+              💬 Text Client
+            </a>
+          </td>
+        </tr>
+        ${email ? `
+        <tr>
+          <td colspan="2" style="padding-top: 12px; text-align: center;">
+            <a href="mailto:${email}" style="color: #A1A1AA; font-size: 13px; text-decoration: underline;">
+              Or email client: ${email}
+            </a>
+          </td>
+        </tr>
+        ` : ''}
+      </table>
+    `;
+  }
+
   const emailHtml = `
     <div style="background-color: #080808; padding: 32px 16px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #FFFFFF; min-height: 100%;">
       <div style="max-width: 580px; margin: 0 auto; background-color: #121212; border: 1px solid #27272A; border-top: 4px solid #B30000; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
@@ -98,15 +183,7 @@ export default async function handler(req: any, res: any) {
           </div>
 
           <!-- Quick Action -->
-          <table style="width: 100%; margin-top: 32px; border-collapse: collapse;">
-            <tr>
-              <td>
-                <a href="tel:${phone}" style="display: block; text-align: center; background-color: #B30000; color: #FFFFFF; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 24px; border-radius: 100px; text-decoration: none;">
-                  Call Client Now
-                </a>
-              </td>
-            </tr>
-          </table>
+          ${actionButtonsHtml}
         </div>
 
         <!-- Footer -->
