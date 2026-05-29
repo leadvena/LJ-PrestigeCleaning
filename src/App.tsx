@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import {
-  Baby,
   Sparkles,
   Truck,
+  Baby,
   Home,
   Star,
   ShieldCheck,
@@ -11,19 +11,13 @@ import {
   Phone,
   Mail,
   MapPin,
-  Calendar,
-  ArrowRight,
-  Clock,
-  AlertCircle,
-  CheckCircle2,
-  ChevronDown,
-  ChevronUp,
-  X,
   Send,
-  Loader2
+  Loader2,
+  X,
+  CheckCircle2,
+  AlertCircle
 } from "lucide-react";
 import Header from "./components/Header";
-import Logo from "./components/Logo";
 import { servicesData, trustBadges, reviewsData, faqsData } from "./data";
 import { EstimateFormData } from "./types";
 
@@ -33,7 +27,7 @@ export default function App() {
     phone: "",
     email: "",
     serviceType: "airbnb-cleaning",
-    preferredContact: "Phone",
+    preferredContact: "Phone Call",
     message: ""
   });
 
@@ -45,8 +39,6 @@ export default function App() {
   }>({ type: null, message: "" });
 
   const [modalOpen, setModalOpen] = useState(false);
-
-  // Elite Before/After Interactive Visualizer
   const [sliderPos, setSliderPos] = useState(50);
   const [isDraggingSlider, setIsDraggingSlider] = useState(false);
   const visualizerRef = useRef<HTMLDivElement>(null);
@@ -60,15 +52,11 @@ export default function App() {
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches[0]) {
-      handleVisualizerMove(e.touches[0].clientX);
-    }
+    if (e.touches[0]) handleVisualizerMove(e.touches[0].clientX);
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (e.buttons === 1 || isDraggingSlider) {
-      handleVisualizerMove(e.clientX);
-    }
+    if (e.buttons === 1 || isDraggingSlider) handleVisualizerMove(e.clientX);
   };
 
   const handleInputChange = (
@@ -78,7 +66,7 @@ export default function App() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const selectServiceAndOpenModal = (serviceId: string) => {
+  const openEstimateModal = (serviceId: string) => {
     setFormData((prev) => ({ ...prev, serviceType: serviceId }));
     setModalOpen(true);
   };
@@ -91,366 +79,284 @@ export default function App() {
     try {
       const response = await fetch("/api/estimate", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       });
-
       const data = await response.json();
 
       if (response.ok) {
         setStatus({
           type: "success",
-          message: data.message || "Your schedule has been successfully generated! We will reach out to you shortly."
+          message: data.message || "Thank you! Your estimate request has been sent successfully."
         });
-        // Clear non-essential fields
         setFormData({
           name: "",
           phone: "",
           email: "",
           serviceType: "airbnb-cleaning",
-          preferredContact: "Phone",
+          preferredContact: "Phone Call",
           message: ""
         });
+        setTimeout(() => setModalOpen(false), 2000);
       } else {
         setStatus({
           type: "error",
-          message: data.error || "Something went wrong. Please check the fields and try again."
+          message: data.error || "Failed to submit. Please check all fields and try again."
         });
       }
     } catch (err) {
-      console.error("Estimate submit error:", err);
       setStatus({
         type: "error",
-        message: "Failed to submit request. Please try calling us directly for instant booking."
+        message: "Network issue. Please contact Letty or Jozette directly."
       });
     } finally {
       setLoading(false);
     }
   };
 
-  // Sparkle stars layout component in molten amber style
-  const SparkleBackground = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-      {/* Sparkle 1 */}
-      <div className="absolute top-[10%] left-[5%] animate-pulse duration-[3000ms] opacity-40">
-        <svg className="w-5 h-5 text-brand-amber-start" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
-        </svg>
-      </div>
-      {/* Sparkle 2 */}
-      <div className="absolute top-[35%] right-[10%] animate-pulse duration-[4000ms] opacity-60">
-        <svg className="w-8 h-8 text-brand-amber-end" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
-        </svg>
-      </div>
-      {/* Sparkle 3 */}
-      <div className="absolute top-[68%] left-[12%] animate-pulse duration-[2500ms] opacity-35">
-        <svg className="w-6 h-6 text-brand-amber-start" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
-        </svg>
-      </div>
-      {/* Sparkle 4 */}
-      <div className="absolute top-[82%] right-[8%] animate-pulse duration-[3500ms] opacity-50">
-        <svg className="w-4 h-4 text-brand-amber-end" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
-        </svg>
-      </div>
-      {/* Sparkle 5 (near bottom left) */}
-      <div className="absolute bottom-[5%] left-[8%] animate-pulse duration-[5000ms] opacity-30">
-        <svg className="w-7 h-7 text-brand-amber-start" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
-        </svg>
-      </div>
-    </div>
-  );
-
-  // Helper to render service icons matching original requested theme
   const getServiceIcon = (iconName: string) => {
     switch (iconName) {
-      case "Baby":
-        return <Baby className="w-8 h-8 text-brand-amber-end" />;
-      case "HomeStar":
-        return <Home className="w-8 h-8 text-brand-amber-end" />;
-      case "Sparkles":
-        return <Sparkles className="w-8 h-8 text-brand-amber-end" />;
-      case "Truck":
-        return <Truck className="w-8 h-8 text-brand-amber-end" />;
-      default:
-        return <Sparkles className="w-8 h-8 text-brand-amber-end" />;
+      case "Baby": return <Baby className="w-5 h-5 text-brand-crimson" />;
+      case "HomeStar": return <Home className="w-5 h-5 text-brand-crimson" />;
+      case "Sparkles": return <Sparkles className="w-5 h-5 text-brand-crimson" />;
+      case "Truck": return <Truck className="w-5 h-5 text-brand-crimson" />;
+      default: return <Sparkles className="w-5 h-5 text-brand-crimson" />;
     }
   };
 
-  // Helper to render trust badges icons
   const getBadgeIcon = (iconName: string) => {
     switch (iconName) {
-      case "TrendingDown":
-        return <TrendingDown className="w-8 h-8 text-brand-amber-end" />;
-      case "ShieldCheck":
-        return <ShieldCheck className="w-8 h-8 text-brand-amber-end" />;
-      case "Languages":
-        return <Languages className="w-8 h-8 text-brand-amber-end" />;
-      default:
-        return <Star className="w-8 h-8 text-brand-amber-end" />;
+      case "TrendingDown": return <TrendingDown className="w-5 h-5 text-brand-crimson" />;
+      case "ShieldCheck": return <ShieldCheck className="w-5 h-5 text-brand-crimson" />;
+      case "Languages": return <Languages className="w-5 h-5 text-brand-crimson" />;
+      default: return <Star className="w-5 h-5 text-brand-crimson" />;
     }
   };
 
   return (
-    <div className="bg-textured text-brand-offwhite min-h-screen font-sans overflow-x-hidden relative">
+    <div className="bg-textured min-h-screen text-brand-offwhite relative overflow-x-hidden pt-[110px]">
       <Header />
 
-      {/* Hero Section with Ambient Asset Background */}
-      <section id="home" className="relative pt-32 pb-24 md:pt-40 md:pb-36 flex flex-col items-center justify-center border-b border-brand-charcoal overflow-hidden min-h-[90vh]">
-        
-        {/* High-end cinematic hero background banner */}
-        <div className="absolute inset-0 z-0 select-none">
-          <img
-            src="/images/hero_bg_1780019650230.png"
-            alt="L&J Prestige Luxury House Background"
-            className="w-full h-full object-cover opacity-20"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent"></div>
-        </div>
-
-        <SparkleBackground />
-        
-        {/* Subtle Background House / Cityscape Silhouette */}
-        <div className="absolute bottom-0 inset-x-0 h-40 opacity-5 md:opacity-[0.08] pointer-events-none select-none z-0">
-          <svg className="w-full h-full text-brand-offwhite" viewBox="0 0 1440 200" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,200 L120,80 L240,200 L360,110 L480,200 L600,60 L720,200 L840,110 L960,200 L1080,75 L1200,200 L1320,130 L1440,200 Z" />
-          </svg>
-        </div>
-
-        <div className="max-w-4xl mx-auto px-4 text-center z-10 relative">
-          
-          {/* Logo container with glow */}
-          <div className="mb-6 md:mb-10 max-w-lg mx-auto transform hover:scale-102 transition-transform duration-300">
-            <Logo className="h-28 sm:h-36 md:h-44 w-auto" glow={true} />
-          </div>
-
-          {/* Ribbon-style Hero Badge */}
-          <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-crimson to-brand-amber-start text-white font-display text-xs sm:text-sm font-black tracking-widest uppercase shadow-lg border border-brand-amber-end/30 mb-8 animate-bounce">
-            <Sparkles className="w-4 h-4 text-white fill-white animate-spin-slow" />
-            <span>We Beat Any Price • Free Estimates</span>
-            <Sparkles className="w-4 h-4 text-white fill-white animate-spin-slow" />
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-brand-offwhite leading-tight mb-6">
-            Colorado's Elite <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-amber-start via-amber-400 to-brand-amber-end">
-              Cleaning &amp; Junk Removal
-            </span>
-          </h1>
-
-          <p className="text-gray-400 font-sans text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-6">
-            We deliver uncompromising sanitation and power-hauling across Colorado. From pristine, certified pet/child-safe preschools to lightning-fast Airbnb turnover checkouts.
-          </p>
-
-          {/* Premium Family-Owned, Licensed & Insured Badges */}
-          <div className="flex flex-wrap justify-center items-center gap-3 mb-10">
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-lg bg-brand-amber-start/5 border border-brand-amber-start/30 text-brand-amber-end font-sans text-xs font-semibold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 fill-brand-amber-start text-brand-amber-start" />
-              Small Family-Owned Business
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-lg bg-white/[0.02] border border-white/10 text-brand-offwhite font-sans text-xs font-semibold uppercase tracking-wider">
-              <ShieldCheck className="w-3.5 h-3.5 text-brand-crimson" />
-              100% Licensed &amp; Insured
-            </span>
-          </div>
-
-          {/* Two Prominent Action-Trigger CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md mx-auto mb-12">
+      {/* ─── Hero Section ─── */}
+      <section id="home" className="relative px-4 sm:px-6 lg:px-8 py-20 lg:py-32 flex flex-col justify-center min-h-[90vh] overflow-hidden hero-glow">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
+          {/* Hero text */}
+          <div className="lg:col-span-7 flex flex-col gap-6 animate-slide-left">
+            <span className="section-label">Colorado's Prestige Standard</span>
             
-            {/* Call Letty */}
-            <a
-              id="hero-call-letty"
-              href="tel:7192501717"
-              className="group w-full sm:w-1/2 flex flex-col items-center justify-center bg-brand-crimson hover:bg-brand-crimson/95 text-white py-4 px-6 rounded-xl font-display font-extrabold transition-all duration-300 hover:shadow-[0_0_20px_rgba(192,57,43,0.4)] active:scale-98"
-            >
-              <span className="flex items-center gap-2 text-base tracking-wide uppercase">
-                <Phone className="w-4 h-4 text-white transition-transform group-hover:rotate-12" />
-                <span>Call Letty</span>
-              </span>
-              <span className="text-[11px] font-normal tracking-widest text-[#FFF] opacity-80 uppercase mt-0.5">
-                (Hablo Español)
-              </span>
-              <span className="font-mono text-xs text-black bg-white/90 px-2 py-0.5 rounded-md mt-1 font-bold">
-                719.250.1717
-              </span>
-            </a>
+            <h1 className="display-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+              Your Home.<br />
+              <span className="text-[#ffffff]">Our Standard.</span>
+            </h1>
 
-            {/* Call Jozette */}
-            <a
-              id="hero-call-jozette"
-              href="tel:3032422695"
-              className="group w-full sm:w-1/2 flex flex-col items-center justify-center bg-gradient-to-r from-brand-amber-start to-brand-amber-end hover:from-brand-amber-start/95 hover:to-brand-amber-end/95 text-black py-4 px-6 rounded-xl font-display font-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(230,126,34,0.4)] active:scale-98"
-            >
-              <span className="flex items-center gap-2 text-base tracking-wide uppercase">
-                <Phone className="w-4 h-4 text-black transition-transform group-hover:rotate-12" />
-                <span>Call Jozette</span>
-              </span>
-              <span className="text-[11px] font-bold tracking-widest text-black/70 uppercase mt-0.5">
-                English Service
-              </span>
-              <span className="font-mono text-xs text-white bg-black/90 px-2 py-0.5 rounded-md mt-1 font-bold">
-                303-242-2695
-              </span>
-            </a>
-          </div>
-
-          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm text-gray-500 font-mono">
-            <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-              Colorado Springs
-            </span>
-            <span className="text-brand-charcoal">•</span>
-            <span>Denver Metro</span>
-            <span className="text-brand-charcoal">•</span>
-            <span>Castle Rock</span>
-            <span className="text-brand-charcoal">•</span>
-            <span>Pueblo</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" className="py-20 md:py-28 relative bg-brand-dark border-b border-brand-charcoal overflow-hidden">
-        <SparkleBackground />
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
-            <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-widest text-brand-crimson mb-3">
-              <Sparkles className="w-4 h-4 text-brand-amber-start" />
-              <span>Full-Stack Operations</span>
-            </div>
-            
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-brand-offwhite mb-4">
-              Premium <span className="text-brand-crimson">Service Categories</span>
-            </h2>
-            <div className="h-1.5 w-24 bg-gradient-to-r from-brand-crimson to-brand-amber-start mx-auto rounded mb-6"></div>
-            
-            <p className="text-gray-400 font-sans text-base sm:text-lg">
-              We provide detail-oriented services designed to beat franchise pricing. Every clean guarantees the highest standard of sanitization.
+            <p className="body-text text-lg max-w-xl">
+              Uncompromising child-safe preschool sanitation, elite Airbnb staging, and swift commercial haulage. family-owned and custom detailed.
             </p>
-          </div>
 
-          {/* 4 Cards Grid */}
-          <div id="services-grid" className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-            {servicesData.map((service) => (
-              <div
-                key={service.id}
-                className="group relative bg-[#131313] border-l-4 border-l-brand-crimson hover:border-l-brand-amber-start border-y border-r border-brand-charcoal hover:border-brand-amber-start/30 rounded-r-2xl overflow-hidden hover:bg-brand-charcoal/30 transition-all duration-300 flex flex-col justify-between shadow-lg"
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <a
+                href="tel:7192501717"
+                className="btn-crimson inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full text-base font-bold shadow-lg"
               >
-                
-                {/* Visual Header Image representation of services */}
-                {service.imageUrl && (
-                  <div className="relative h-48 sm:h-56 w-full overflow-hidden">
-                    <img
-                      src={service.imageUrl}
-                      alt={service.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#131313] via-[#131313]/50 to-transparent"></div>
-                    <div className="absolute top-4 left-4 p-3 bg-brand-dark/90 rounded-xl border border-brand-charcoal backdrop-blur-sm shadow">
-                      {getServiceIcon(service.iconName)}
-                    </div>
-                  </div>
-                )}
+                <Phone className="w-5 h-5" />
+                <span>Call Letty · 719.250.1717</span>
+              </a>
+              <button
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                className="btn-ghost px-8 py-4 rounded-full text-base font-bold"
+              >
+                Free Estimate
+              </button>
+            </div>
 
-                {/* Truck Silhouette background watermark specifically for Junk Removal Card */}
-                {service.id === "junk-removal" && (
-                  <div className="absolute right-4 bottom-4 w-28 h-28 opacity-[0.02] group-hover:opacity-[0.04] text-brand-offwhite pointer-events-none transition-opacity duration-300">
-                    <Truck className="w-full h-full" strokeWidth={1} />
-                  </div>
-                )}
-
-                <div className="p-6 sm:p-8 flex flex-col justify-between flex-grow">
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-mono font-bold uppercase tracking-widest text-brand-amber-start">
-                        PRESTIGE DETAILING Standard
-                      </span>
-                      {/* Star Badge */}
-                      <div className="flex gap-0.5 text-brand-amber-end">
-                        <Star className="w-3.5 h-3.5 fill-brand-amber-end text-brand-amber-end" />
-                        <Star className="w-3.5 h-3.5 fill-brand-amber-end text-brand-amber-end" />
-                        <Star className="w-3.5 h-3.5 fill-brand-amber-end text-brand-amber-end" />
-                        <Star className="w-3.5 h-3.5 fill-brand-amber-end text-brand-amber-end" />
-                        <Star className="w-3.5 h-3.5 fill-brand-amber-end text-brand-amber-end" />
-                      </div>
-                    </div>
-
-                    <h3 className="text-xl sm:text-2xl font-display font-extrabold text-brand-offwhite group-hover:text-brand-amber-start transition-colors duration-200 mb-3">
-                      {service.title}
-                    </h3>
-
-                    <p className="text-gray-400 text-sm sm:text-base mb-6 leading-relaxed">
-                      {service.description}
-                    </p>
-
-                    <ul className="space-y-3 mb-8">
-                      {service.details.map((detail, index) => (
-                        <li key={index} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-300">
-                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-crimson flex-shrink-0"></span>
-                          <span>{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="pt-4 border-t border-brand-charcoal/50 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between mt-auto">
-                    <div className="text-xs font-mono font-medium text-brand-amber-start flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-brand-amber-start fill-brand-amber-start" />
-                      <span>Prestige Sparkle &amp; Sanitize</span>
-                    </div>
-                    
-                    <button
-                      onClick={() => selectServiceAndOpenModal(service.id)}
-                      className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-brand-charcoal/60 hover:bg-brand-crimson text-sm font-display font-bold text-brand-offwhite transition-all duration-200 group-hover:shadow-md cursor-pointer"
-                    >
-                      <span>Free Estimate</span>
-                      <ArrowRight className="w-4 h-4 text-brand-amber-end group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-            ))}
+            {/* Coverage Towns */}
+            <div className="border-t border-[#1a1a1a] pt-6 mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs font-mono text-[#555]">
+              <span>[CO SPRINGS]</span>
+              <span>[DENVER METRO]</span>
+              <span>[CASTLE ROCK]</span>
+              <span>[PUEBLO]</span>
+            </div>
           </div>
 
+          {/* Hero Image (Tilted editorial frame) */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end animate-fade-in delay-200">
+            <div className="relative w-full max-w-[450px] aspect-[4/5] rounded-[20px] overflow-hidden border border-brand-border shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
+              <img
+                src="/images/hero_bg_1780019650230.png"
+                alt="Elite Colorado home layout"
+                className="w-full h-full object-cover filter grayscale contrast-115 brightness-90 hover:grayscale-0 transition-all duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/80 via-transparent to-transparent"></div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* BEFORE & AFTER PRESTIGE VISUALIZER */}
-      <section className="py-24 relative bg-brand-dark border-b border-brand-charcoal overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-crimson/5 rounded-full blur-[140px] pointer-events-none"></div>
-        <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-brand-amber-start/5 rounded-full blur-[100px] pointer-events-none"></div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-amber-start/10 text-brand-amber-start font-mono text-xs font-black tracking-widest uppercase mb-4 border border-brand-amber-start/20">
-              <Sparkles className="w-3.5 h-3.5 fill-brand-amber-start text-brand-amber-start animate-pulse" />
-              <span>Interactive Prestige Showcase</span>
-            </div>
-            
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-white mb-4">
-              Witness Elegant <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-amber-start via-amber-400 to-brand-amber-end font-black">Transformation</span>
+      {/* ─── Services Grid (Bento Box Layout) ─── */}
+      <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16 animate-fade-up">
+            <span className="section-label">What We Do</span>
+            <h2 className="display-heading text-3xl sm:text-4xl md:text-5xl mt-2">
+              Bespoke Cleaning Services.
             </h2>
-            <div className="h-1.5 w-20 bg-gradient-to-r from-brand-crimson to-brand-amber-start mx-auto rounded mb-6"></div>
-            
-            <p className="text-gray-400 text-sm sm:text-base md:text-lg">
-              Drag the golden slider with your finger or mouse to slide between the dusty, unsanitized environment and the pristine, high-end luxury L&amp;J Sparkle standard.
-            </p>
+            <span className="accent-bar"></span>
           </div>
 
-          {/* Interactive Slider Container */}
-          <div className="max-w-4xl mx-auto">
-            <div 
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            
+            {/* Card 1: Daycare (Tall) */}
+            <div className="md:col-span-7 bg-brand-surface border border-brand-border rounded-[20px] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-[#333] transition-all duration-300 min-h-[380px]">
+              <div className="absolute inset-0 z-0 opacity-15 group-hover:opacity-25 transition-opacity duration-300">
+                <img
+                  src="/images/daycare_clean_1780019670393.png"
+                  alt="Daycare cleaning details"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="relative z-10 flex flex-col gap-4">
+                <div className="w-10 h-10 rounded-lg bg-brand-surface-2 border border-brand-border flex items-center justify-center">
+                  {getServiceIcon("Baby")}
+                </div>
+                <h3 className="text-2xl font-bold tracking-tight text-white group-hover:text-brand-crimson transition-colors">
+                  Preschool &amp; Daycare Cleaning
+                </h3>
+                <p className="text-brand-grey text-sm max-w-md leading-relaxed">
+                  Certified non-toxic, child-safe protection for daycare nurseries. Fully compliant with Colorado Department of Human Services rules.
+                </p>
+                <ul className="text-xs text-brand-grey space-y-2 mt-2">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full bg-brand-crimson" />
+                    HEPA-filter air dusting &amp; sterilization
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full bg-brand-crimson" />
+                    Deep restroom disinfection
+                  </li>
+                </ul>
+              </div>
+              <div className="relative z-10 mt-6 pt-4 border-t border-brand-border/40 flex items-center justify-between">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-brand-crimson font-bold">Daycare Standard</span>
+                <button
+                  onClick={() => openEstimateModal("daycare-cleaning")}
+                  className="btn-ghost px-4 py-2 rounded-full text-xs font-bold"
+                >
+                  Estimate
+                </button>
+              </div>
+            </div>
+
+            {/* Card 2: Airbnb (Standard) */}
+            <div className="md:col-span-5 bg-brand-surface border border-brand-border rounded-[20px] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-[#333] transition-all duration-300 min-h-[380px]">
+              <div className="absolute inset-0 z-0 opacity-15 group-hover:opacity-25 transition-opacity duration-300">
+                <img
+                  src="/images/airbnb_turnover_1780019691921.png"
+                  alt="Airbnb staging"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="relative z-10 flex flex-col gap-4">
+                <div className="w-10 h-10 rounded-lg bg-brand-surface-2 border border-brand-border flex items-center justify-center">
+                  {getServiceIcon("HomeStar")}
+                </div>
+                <h3 className="text-2xl font-bold tracking-tight text-white group-hover:text-brand-crimson transition-colors">
+                  Airbnb Turnover Staging
+                </h3>
+                <p className="text-brand-grey text-sm leading-relaxed">
+                  Five-star rapid cleaning standard designed to elevate guest reviews and secure Superhost status.
+                </p>
+              </div>
+              <div className="relative z-10 mt-6 pt-4 border-t border-brand-border/40 flex items-center justify-between">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-brand-crimson font-bold">Turnover Staging</span>
+                <button
+                  onClick={() => openEstimateModal("airbnb-cleaning")}
+                  className="btn-ghost px-4 py-2 rounded-full text-xs font-bold"
+                >
+                  Estimate
+                </button>
+              </div>
+            </div>
+
+            {/* Card 3: Residential (Standard) */}
+            <div className="md:col-span-5 bg-brand-surface border border-brand-border rounded-[20px] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-[#333] transition-all duration-300 min-h-[380px]">
+              <div className="absolute inset-0 z-0 opacity-15 group-hover:opacity-25 transition-opacity duration-300">
+                <img
+                  src="/images/residential_clean_1780019711990.png"
+                  alt="Residential housekeeping"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="relative z-10 flex flex-col gap-4">
+                <div className="w-10 h-10 rounded-lg bg-brand-surface-2 border border-brand-border flex items-center justify-center">
+                  {getServiceIcon("Sparkles")}
+                </div>
+                <h3 className="text-2xl font-bold tracking-tight text-white group-hover:text-brand-crimson transition-colors">
+                  Residential House Clean
+                </h3>
+                <p className="text-brand-grey text-sm leading-relaxed">
+                  Premium home detailing tailored around your lifestyle. Spotless results from baseboards to ceiling fans.
+                </p>
+              </div>
+              <div className="relative z-10 mt-6 pt-4 border-t border-brand-border/40 flex items-center justify-between">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-brand-crimson font-bold">House Detail</span>
+                <button
+                  onClick={() => openEstimateModal("residential-cleaning")}
+                  className="btn-ghost px-4 py-2 rounded-full text-xs font-bold"
+                >
+                  Estimate
+                </button>
+              </div>
+            </div>
+
+            {/* Card 4: Junk Hauling (Tall Red Accent Card) */}
+            <div className="md:col-span-7 bg-[#4A0D0D] border border-brand-border rounded-[20px] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-[#6A1111] transition-all duration-300 min-h-[380px]">
+              <div className="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 transition-opacity duration-300">
+                <img
+                  src="/images/junk_removal_1780019730037.png"
+                  alt="Junk hauling"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="relative z-10 flex flex-col gap-4">
+                <div className="w-10 h-10 rounded-lg bg-[#5e1414] border border-[#7e1c1c] flex items-center justify-center">
+                  {getServiceIcon("Truck")}
+                </div>
+                <h3 className="text-2xl font-bold tracking-tight text-white group-hover:text-red-300 transition-colors">
+                  Commercial &amp; Residential Junk Removal
+                </h3>
+                <p className="text-red-100 text-sm max-w-md leading-relaxed">
+                  Prompt, heavy-duty hauling. We Beat Any Competitor Price—Bring us any written estimate and watch us beat it.
+                </p>
+              </div>
+              <div className="relative z-10 mt-6 pt-4 border-t border-red-900/55 flex items-center justify-between">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-red-200 font-bold">Heavy Hauling</span>
+                <button
+                  onClick={() => openEstimateModal("junk-removal")}
+                  className="bg-white text-[#4A0D0D] hover:bg-red-100 transition-colors px-6 py-2 rounded-full text-xs font-bold"
+                >
+                  Estimate
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Before & After Interactive Showcase ─── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg/50 border-y border-brand-border relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="section-label">Interactive Showcase</span>
+            <h2 className="display-heading text-3xl sm:text-4xl md:text-5xl mt-2">
+              Witness the Difference.
+            </h2>
+            <div className="accent-bar mx-auto"></div>
+          </div>
+
+          <div className="max-w-4xl mx-auto relative">
+            <div
               id="before-after-visualizer"
               ref={visualizerRef}
               onMouseMove={handleMouseMove}
@@ -460,664 +366,483 @@ export default function App() {
               onMouseLeave={() => setIsDraggingSlider(false)}
               onTouchStart={() => setIsDraggingSlider(true)}
               onTouchEnd={() => setIsDraggingSlider(false)}
-              className="relative h-[280px] sm:h-[420px] md:h-[500px] w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(230,126,34,0.12)] border border border-white/[0.06] select-none cursor-ew-resize group"
+              className="relative h-[300px] sm:h-[450px] md:h-[520px] w-full rounded-[24px] overflow-hidden border border-brand-border select-none cursor-ew-resize group"
             >
-              {/* After Layer (Base - Beautiful Colorful & Sparkly) */}
+              {/* After Frame */}
               <div className="absolute inset-0 z-0 bg-brand-dark">
-                <img 
-                  src="/images/residential_clean_1780019711990.png" 
-                  alt="Spotless clean modern residence kitchen" 
-                  className="w-full h-full object-cover pointer-events-none select-none"
-                  referrerPolicy="no-referrer"
+                <img
+                  src="/images/residential_clean_1780019711990.png"
+                  alt="Spotless luxury kitchen"
+                  className="w-full h-full object-cover pointer-events-none"
                 />
                 
-                {/* Custom Overlay Sparkle Flares on the After Image for visual dopamine */}
-                <div className="absolute top-[20%] right-[15%] w-8 h-8 pointer-events-none animate-pulse opacity-80 z-10 text-brand-amber-end">
-                  <Sparkles className="w-full h-full fill-brand-amber-end text-brand-amber-end" />
-                </div>
-                <div className="absolute bottom-[30%] right-[35%] w-6 h-6 pointer-events-none animate-pulse opacity-70 z-10 text-brand-amber-start">
-                  <Sparkles className="w-full h-full fill-brand-amber-start text-brand-amber-start" />
+                {/* Visual Glow Layer */}
+                <div className="absolute top-[20%] right-[15%] pointer-events-none animate-pulse-glow">
+                  <Sparkles className="w-8 h-8 text-white fill-white" />
                 </div>
 
-                {/* Status Badge right */}
-                <div className="absolute bottom-6 right-6 z-10 px-4 py-2 bg-black/85 backdrop-blur-md rounded-xl border border-brand-amber-start/30 shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
-                  <span className="flex items-center gap-1.5 text-xs text-brand-amber-end font-mono font-bold tracking-widest uppercase">
-                    <span className="w-2 h-2 rounded-full bg-brand-amber-start animate-ping"></span>
-                    L&amp;J PRESTIGE AFTER
+                <div className="absolute bottom-6 right-6 z-10 px-4 py-2 bg-black/80 backdrop-blur-md rounded-xl border border-brand-border">
+                  <span className="text-[10px] text-white font-mono tracking-widest uppercase">
+                    PRESTIGE AFTER
                   </span>
                 </div>
               </div>
 
-              {/* Before Layer (Sliding overlay with heavy dark, dull sepia-grayscale filter) */}
-              <div 
+              {/* Before Frame (Sepia grey styled) */}
+              <div
                 className="absolute inset-y-0 left-0 overflow-hidden z-10 transition-all pointer-events-none"
                 style={{ width: `${sliderPos}%` }}
               >
-                {/* Inner container with fixed full width so image doesn't compress */}
-                <div className="absolute inset-y-0 left-0 w-[280px] sm:w-[500px] md:w-[900px]" style={{ width: visualizerRef.current?.getBoundingClientRect().width || "100%" }}>
-                  <img 
-                    src="/images/residential_clean_1780019711990.png" 
-                    alt="Standard dirty household kitchen" 
-                    className="w-full h-full object-cover pointer-events-none select-none filter grayscale saturate-[40%] brightness-[0.45] sepia-[20%] blur-[1.2px]"
-                    referrerPolicy="no-referrer"
+                <div
+                  className="absolute inset-y-0 left-0"
+                  style={{ width: visualizerRef.current?.getBoundingClientRect().width || "100%" }}
+                >
+                  <img
+                    src="/images/residential_clean_1780019711990.png"
+                    alt="Dusty household kitchen"
+                    className="w-full h-full object-cover pointer-events-none filter grayscale contrast-90 brightness-50"
                   />
-                  {/* Status Badge left */}
-                  <div className="absolute bottom-6 left-6 z-10 px-4 py-2 bg-brand-charcoal/90 backdrop-blur-md rounded-xl border border-white/5">
-                    <span className="text-xs text-gray-400 font-mono font-bold tracking-widest uppercase">
-                      BEFORE SERVICE (DULL)
+                  <div className="absolute bottom-6 left-6 z-10 px-4 py-2 bg-black/80 backdrop-blur-md rounded-xl border border-brand-border">
+                    <span className="text-[10px] text-[#777] font-mono tracking-widest uppercase">
+                      BEFORE SERVICE
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Slider Controller Divider Column */}
-              <div 
-                className="absolute inset-y-0 z-20 w-1 bg-gradient-to-b from-brand-crimson via-brand-amber-start to-brand-amber-end pointer-events-none shadow-[0_0_20px_rgba(230,126,34,0.6)]"
+              {/* Slider Track Line */}
+              <div
+                className="absolute inset-y-0 z-20 w-0.5 slider-track pointer-events-none"
                 style={{ left: `${sliderPos}%` }}
               >
-                {/* Draggable Circle Knob */}
-                <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-brand-dark border-2 border-brand-amber-start shadow-[0_0_25px_rgba(230,126,34,0.7)] flex items-center justify-center cursor-ew-resize group-hover:scale-110 transition-transform active:scale-95">
-                  <svg className="w-6 h-6 text-brand-amber-end animate-pulse" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                {/* Draggable knob */}
+                <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-brand-surface border border-brand-crimson flex items-center justify-center cursor-ew-resize shadow-xl">
+                  <svg className="w-4 h-4 text-brand-offwhite" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l-4 4 4 4m8 0l4-4-4-4" />
                   </svg>
                 </div>
               </div>
-
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* Why Choose Us Trust Badges */}
-      <section id="about" className="py-20 md:py-28 relative bg-brand-dark/50 border-b border-brand-charcoal overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* ─── Trust / Promise Section ─── */}
+      <section id="about" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg relative">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           
-          <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-            <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-widest text-brand-amber-start mb-3">
-              <span>Unmatched Colorado Integrity</span>
+          {/* Left: Frame Photo */}
+          <div className="lg:col-span-6">
+            <div className="relative rounded-[24px] overflow-hidden border border-brand-border aspect-[4/3] bg-brand-surface">
+              <img
+                src="/images/residential_clean_1780019711990.png"
+                alt="Immaculate living space room"
+                className="w-full h-full object-cover filter grayscale contrast-110 brightness-85"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-brand-crimson/15 to-transparent pointer-events-none"></div>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-display font-extrabold tracking-tight text-brand-offwhite mb-4">
-              Why Colorado Trusts <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-amber-start to-brand-amber-end">L&amp;J Prestige</span>
+          </div>
+
+          {/* Right: Content Stack */}
+          <div className="lg:col-span-6 flex flex-col gap-6">
+            <span className="section-label">Our Promise</span>
+            <h2 className="display-heading text-3xl sm:text-4xl md:text-5xl">
+              Colorado's Most Trusted Cleaning Crew.
             </h2>
-            <div className="h-1 w-16 bg-brand-amber-start mx-auto rounded mb-4"></div>
-          </div>
+            
+            <p className="body-text">
+              We are Letty &amp; Jozette, running this family business with our boys. Every client gets direct co-founder quality assurance. No franchise markups, no shortcuts.
+            </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {trustBadges.map((badge) => (
-              <div
-                key={badge.id}
-                className="bg-brand-charcoal/40 border border-brand-charcoal hover:border-brand-crimson/35 rounded-2xl p-6 sm:p-8 text-center hover:bg-brand-charcoal/70 transition-all duration-300 relative group"
-              >
-                {/* Visual Accent */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-1 bg-gradient-to-r from-brand-crimson to-brand-amber-start rounded-b opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                
-                <div className="inline-flex p-4 bg-brand-dark rounded-full border border-brand-charcoal/60 group-hover:border-brand-amber-start/30 mb-6 transition-all duration-300 group-hover:scale-105">
-                  {getBadgeIcon(badge.iconName)}
-                </div>
-
-                <h3 className="text-xl font-display font-extrabold text-[#FFF] mb-3 group-hover:text-brand-amber-start transition-colors">
-                  {badge.title}
-                </h3>
-                
-                <p className="text-gray-400 text-sm leading-relaxed font-sans">
-                  {badge.description}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Detailed About Us Segment containing Colorado Background and Founders Story */}
-          <div className="mt-16 bg-[#121212] border border-brand-charcoal rounded-2xl p-6 sm:p-10 md:p-12 relative overflow-hidden">
-            <div className="absolute -right-32 -bottom-32 w-96 h-96 opacity-[0.02] text-brand-offwhite pointer-events-none">
-              <Sparkles className="w-full h-full" />
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-7">
-                <span className="text-xs font-mono font-bold text-brand-crimson uppercase tracking-widest block mb-2">Our Foundation Story</span>
-                <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-brand-offwhite mb-6">
-                  Born in Colorado. Committed to Premium, Local Service.
-                </h3>
-                <div className="space-y-4 text-gray-400 text-sm sm:text-base leading-relaxed">
-                  <p>
-                    L&amp;J Prestige is a proud <strong className="text-brand-amber-end">small family-owned and operated business</strong> built on dedication, luxury standards, and deep family trust. Founded by Letty, Jozette, and run actively alongside our <strong className="text-brand-offwhite">three incredible boys</strong>, we set out to deliver a bespoke, deep-cleaned prestige experience that commercial franchises simply cannot match.
-                  </p>
-                  <p>
-                    Because we work together as a family, every home or facility we restore is treated with the level of extreme detail and care we would demand for our own loved ones. We employ strictly child-safe, pet-compliant non-toxic sanitation lines to safeguard your health while achieving a marvelous standard of deluxe, high-end brilliance.
-                  </p>
-                  <p>
-                    We understand budgeting. That makes our <span className="text-brand-amber-start font-bold">"We Will Beat Any Price"</span> commitment real. Show us any competitor's quote and watch us match or beat it instantly without cutting a single corner.
-                  </p>
-                </div>
-              </div>
-
-              <div className="lg:col-span-5 bg-brand-charcoal/40 p-6 rounded-xl border border-brand-charcoal flex flex-col justify-between space-y-6">
-                <div>
-                  <h4 className="font-display font-bold text-lg text-brand-offwhite border-b border-brand-charcoal pb-3 mb-4">
-                    Our Direct Pledges:
-                  </h4>
-                  <ul className="space-y-3">
-                    <li className="flex items-center gap-2.5 text-sm text-gray-300">
-                      <CheckCircle2 className="w-4.5 h-4.5 text-brand-amber-start flex-shrink-0 animate-pulse" />
-                      <span className="font-semibold text-brand-amber-end">Proudly Small Family-Owned Business</span>
-                    </li>
-                    <li className="flex items-center gap-2.5 text-sm text-gray-300">
-                      <CheckCircle2 className="w-4.5 h-4.5 text-brand-amber-start flex-shrink-0 animate-pulse" />
-                      <span className="font-semibold text-brand-offwhite">100% Fully Licensed and Insured</span>
-                    </li>
-                    <li className="flex items-center gap-2.5 text-sm text-gray-300">
-                      <CheckCircle2 className="w-4.5 h-4.5 text-brand-crimson flex-shrink-0" />
-                      <span>Always free visual and physical estimates</span>
-                    </li>
-                    <li className="flex items-center gap-2.5 text-sm text-gray-300">
-                      <CheckCircle2 className="w-4.5 h-4.5 text-brand-crimson flex-shrink-0" />
-                      <span>100% child-safe, pet-friendly ingredients</span>
-                    </li>
-                    <li className="flex items-center gap-2.5 text-sm text-gray-300">
-                      <CheckCircle2 className="w-4.5 h-4.5 text-brand-crimson flex-shrink-0" />
-                      <span>Reliable turnover checkout standard</span>
-                    </li>
-                    <li className="flex items-center gap-2.5 text-sm text-gray-300">
-                      <CheckCircle2 className="w-4.5 h-4.5 text-brand-crimson flex-shrink-0" />
-                      <span>Hablo Español to coordinate clearly</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="p-4 bg-brand-dark/80 rounded-lg border border-brand-charcoal text-center">
-                  <p className="text-xs text-brand-amber-start font-bold uppercase tracking-widest mb-1">Colorado Front Range Service</p>
-                  <p className="text-xs text-gray-400">Available 7 days a week including emergency turnovers.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* Free Estimate CTA strip */}
-      <section className="bg-brand-crimson text-white relative py-12 overflow-hidden shadow-xl border-y border-brand-crimson">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-crimson via-red-950 to-brand-crimson opacity-80 player-events-none"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
-            <div>
-              <span className="inline-block bg-brand-amber-start text-white font-mono text-xs font-black tracking-widest uppercase px-3 py-1 rounded-md mb-3">
-                No Obligation • Low Price Promise
-              </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-black uppercase text-brand-offwhite leading-tight">
-                "We Will Beat Any Competitor Price"
-              </h2>
-              <p className="text-red-200 text-sm sm:text-base mt-2 max-w-2xl font-sans">
-                Bring any local estimate. Letty and Jozette are ready to handle child-safe daycare sanitation, premium Airbnb turnovers, or heavy junk hauling.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto items-stretch sm:items-center">
-              <a
-                href="tel:7192501717"
-                className="flex items-center justify-center gap-3 bg-brand-dark hover:bg-brand-charcoal text-white py-4 px-6 rounded-xl font-display font-extrabold shadow-lg transition-transform hover:-translate-y-0.5 active:translate-y-0"
-              >
-                <Phone className="w-5 h-5 text-brand-crimson" />
-                <div className="text-left">
-                  <span className="block text-[9px] text-gray-400 uppercase font-sans font-bold leading-none">Letty (Español)</span>
-                  <span className="font-mono text-base">719.250.1717</span>
-                </div>
-              </a>
-              
-              <a
-                href="tel:3032422695"
-                className="flex items-center justify-center gap-3 bg-gradient-to-r from-brand-amber-start to-brand-amber-end hover:brightness-110 text-white py-4 px-6 rounded-xl font-display font-black shadow-lg transition-transform hover:-translate-y-0.5 active:translate-y-0"
-              >
-                <Phone className="w-5 h-5 text-white" />
-                <div className="text-left">
-                  <span className="block text-[9px] text-white/80 uppercase font-sans font-bold leading-none">Jozette (English)</span>
-                  <span className="font-mono text-base">303.242.2695</span>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Customer Reviews Section */}
-      <section className="py-20 md:py-28 bg-brand-dark border-b border-brand-charcoal overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="inline-block bg-brand-crimson/10 text-brand-crimson font-mono text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-3 border border-brand-crimson/20">
-              5-Star Colorado Client Reviews
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-brand-offwhite">
-              What Our Neighbors Say
-            </h2>
-            <div className="h-1 w-20 bg-brand-crimson mx-auto rounded mt-3"></div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {reviewsData.map((review) => (
-              <div
-                key={review.id}
-                className="bg-[#141414] border border-brand-charcoal rounded-2xl p-6 sm:p-8 hover:bg-brand-charcoal/20 transition-all duration-300"
-              >
-                <div className="flex items-start justify-between mb-4">
+            <div className="flex flex-col mt-4">
+              {trustBadges.map((badge) => (
+                <div key={badge.id} className="trust-row">
+                  <div className="w-10 h-10 rounded-lg bg-brand-surface border border-brand-border flex items-center justify-center flex-shrink-0">
+                    {getBadgeIcon(badge.iconName)}
+                  </div>
                   <div>
-                    <h3 className="font-display font-bold text-lg text-brand-offwhite">
-                      {review.name}
-                    </h3>
-                    <p className="text-xs text-gray-500 font-medium">
-                      {review.location}
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">{badge.title}</h4>
+                    <p className="text-xs text-brand-grey mt-1 leading-relaxed">{badge.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ─── Reviews Grid & Pricing Banner ─── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0a0a] border-t border-brand-border">
+        <div className="max-w-7xl mx-auto">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+            <div className="lg:col-span-4">
+              <span className="section-label">Client Reviews</span>
+              <h2 className="display-heading text-3xl sm:text-4xl md:text-5xl mt-2">
+                What Colorado Says.
+              </h2>
+              <span className="accent-bar"></span>
+            </div>
+
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {reviewsData.map((review) => (
+                <div key={review.id} className="review-card flex flex-col justify-between">
+                  <div>
+                    <div className="flex justify-between items-start mb-4">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-brand-crimson font-bold">
+                        {review.serviceType}
+                      </span>
+                      <div className="flex gap-0.5 text-yellow-500">
+                        {Array.from({ length: review.rating }).map((_, i) => (
+                          <Star key={i} className="w-3 h-3 fill-yellow-500 text-yellow-500" />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-brand-offwhite text-sm italic font-light leading-relaxed">
+                      "{review.comment}"
                     </p>
                   </div>
-                  <span className="bg-brand-crimson/10 text-brand-crimson text-xs font-mono font-bold uppercase px-2.5 py-1 rounded border border-brand-crimson/20">
-                    {review.serviceType}
-                  </span>
+                  <div className="border-t border-brand-border/40 pt-4 mt-6 flex justify-between items-center text-xs text-brand-grey">
+                    <span className="font-bold">{review.name}</span>
+                    <span>{review.location}</span>
+                  </div>
                 </div>
+              ))}
+            </div>
+          </div>
 
-                <div className="flex gap-1 text-brand-amber-end mb-4">
-                  {Array.from({ length: review.rating }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-brand-amber-end text-brand-amber-end" />
-                  ))}
-                </div>
-
-                <p className="text-gray-300 text-sm sm:text-base italic leading-relaxed font-sans">
-                  "{review.comment}"
-                </p>
-              </div>
-            ))}
+          {/* Pricing Match Ribbon */}
+          <div className="bg-brand-crimson rounded-[24px] p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 mt-16 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-crimson-dark to-brand-crimson opacity-50 z-0"></div>
+            <div className="relative z-10 max-w-xl text-center md:text-left">
+              <h3 className="display-heading text-2xl sm:text-3xl text-white">
+                "We Will Beat Any Competitor Price"
+              </h3>
+              <p className="text-red-100 text-sm mt-2 max-w-lg leading-relaxed">
+                Present any written cleaning or junk removal quote from a licensed company in Colorado. We match or beat it safely.
+              </p>
+            </div>
+            <div className="relative z-10 flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+              <a
+                href="tel:7192501717"
+                className="bg-white text-black font-bold px-6 py-3.5 rounded-full text-sm text-center flex items-center justify-center gap-2 hover:bg-red-50 transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                Letty · 719.250.1717
+              </a>
+              <a
+                href="tel:3032422695"
+                className="bg-black/90 text-white border border-red-900/50 font-bold px-6 py-3.5 rounded-full text-sm text-center flex items-center justify-center gap-2 hover:bg-black transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                Jozette · 303.242.2695
+              </a>
+            </div>
           </div>
 
         </div>
       </section>
 
-      {/* FAQ Accordion Section */}
-      <section id="faq" className="py-20 bg-[#121212] border-b border-brand-charcoal">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-display font-extrabold text-brand-offwhite mb-3">
-              Frequently Asked Questions
+      {/* ─── Frequently Asked Questions ─── */}
+      <section id="faq" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="section-label">Common Inquiries</span>
+            <h2 className="display-heading text-3xl sm:text-4xl mt-2">
+              Frequently Asked Questions.
             </h2>
-            <p className="text-gray-400 text-sm">
-              Coordinating a clean or haul with L&amp;J Prestige is easy. Read our quick details.
-            </p>
+            <div className="accent-bar mx-auto"></div>
           </div>
 
           <div className="space-y-4">
-            {faqsData.map((faq, idx) => (
-              <div
-                key={idx}
-                className="bg-brand-dark/90 border border-brand-charcoal rounded-xl overflow-hidden transition-all duration-300"
-              >
-                <button
-                  onClick={() => setFaqOpen(faqOpen === idx ? null : idx)}
-                  className="w-full flex items-center justify-between p-5 text-left font-display font-bold text-base text-brand-offwhite hover:text-brand-amber-start transition-colors cursor-pointer"
-                >
-                  <span>{faq.question}</span>
-                  {faqOpen === idx ? (
-                    <ChevronUp className="w-5 h-5 text-brand-crimson flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-brand-amber-end flex-shrink-0" />
-                  )}
-                </button>
-                
-                {faqOpen === idx && (
-                  <div className="p-5 pt-0 border-t border-brand-charcoal/50 text-gray-400 text-sm leading-relaxed font-sans animate-fadeIn">
-                    {faq.answer}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Booking Form + Direct Contact Information */}
-      <section id="contact" className="py-20 md:py-28 relative overflow-hidden">
-        <SparkleBackground />
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-            
-            {/* Left Column: Direct Call Cards & Details */}
-            <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
-              <div>
-                <span className="text-xs font-mono font-bold text-brand-crimson uppercase tracking-widest block mb-1">Colorado Base Operations</span>
-                
-                <h2 className="text-3xl sm:text-4xl font-display font-black text-brand-offwhite leading-tight mb-4">
-                  Get Your <span className="text-brand-crimson">Free Estimate</span> Today
-                </h2>
-                
-                <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-8">
-                  No hidden fees, no franchise upcharges. Reach our founders directly. Letty is ready to coordinate in Spanish, and Jozette is available around the clock to organize estimates.
-                </p>
-
-                <div className="space-y-4">
-                  
-                  {/* Letty Card */}
-                  <div className="bg-[#121212] border-l-4 border-brand-crimson border-y border-r border-brand-charcoal p-5 rounded-r-xl relative group hover:bg-[#151515] transition-colors">
-                    <span className="absolute top-2 right-4 text-[10px] font-mono font-extrabold text-brand-crimson tracking-widest uppercase bg-brand-crimson/10 px-2 py-0.5 rounded border border-brand-crimson/20">
-                      Hablo Español
-                    </span>
-                    <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Direct Co-Founder</p>
-                    <h4 className="text-lg font-display font-black text-brand-offwhite">Letty</h4>
-                    <p className="text-xs text-gray-400 mb-3">Residential, Preschool, &amp; Daycare Booking Specialist</p>
-                    <a
-                      href="tel:7192501717"
-                      className="inline-flex items-center gap-2 text-brand-amber-start group-hover:text-brand-amber-end font-mono text-lg font-black tracking-wider hover:underline"
-                    >
-                      <Phone className="w-4.5 h-4.5 animate-pulse" />
-                      719.250.1717
-                    </a>
-                  </div>
-
-                  {/* Jozette Card */}
-                  <div className="bg-[#121212] border-l-4 border-brand-amber-start border-y border-r border-brand-charcoal p-5 rounded-r-xl relative group hover:bg-[#151515] transition-colors">
-                    <span className="absolute top-2 right-4 text-[10px] font-mono font-extrabold text-brand-amber-end tracking-widest uppercase bg-brand-amber-start/10 px-2 py-0.5 rounded border border-brand-amber-start/20">
-                      Co-Founder
-                    </span>
-                    <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Direct Co-Founder</p>
-                    <h4 className="text-lg font-display font-black text-brand-offwhite">Jozette</h4>
-                    <p className="text-xs text-gray-400 mb-3">Residential, Airbnb, &amp; Junk Hauling Supervisor</p>
-                    <a
-                      href="tel:3032422695"
-                      className="inline-flex items-center gap-2 text-brand-amber-start group-hover:text-brand-amber-end font-mono text-lg font-black tracking-wider hover:underline"
-                    >
-                      <Phone className="w-4.5 h-4.5" />
-                      303-242-2695
-                    </a>
-                  </div>
-
-                </div>
-              </div>
-
-              {/* Service Assurance Stamp */}
-              <div className="p-4 bg-brand-charcoal/30 border border-brand-charcoal rounded-xl flex items-center gap-4">
-                <div className="p-2.5 bg-brand-crimson/10 rounded-lg text-brand-crimson">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-                <div>
-                  <h5 className="font-display font-bold text-sm text-[#FFF]">Fully Insured &amp; Certified</h5>
-                  <p className="text-xs text-gray-500">Daycare approved child-safe disinfectants only.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Interactive Estimate Booking Form */}
-            <div className="lg:col-span-7">
-              <div className="bg-[#121212] border border-brand-charcoal rounded-2xl p-6 sm:p-8 md:p-10 shadow-2xl relative">
-                
-                <h3 className="text-xl sm:text-2xl font-display font-extrabold text-brand-offwhite mb-2">
-                  Send Booking or Price Beat Request
-                </h3>
-                
-                <p className="text-xs sm:text-sm text-gray-400 mb-6">
-                  Fill in your project specifications. Our founders will review your job details and contact you to lock in your estimate.
-                </p>
-
-                {/* Status Notice Display */}
-                {status.type && (
-                  <div
-                    className={`p-4 rounded-xl mb-6 flex items-start gap-3 border text-sm ${
-                      status.type === "success"
-                        ? "bg-emerald-950/40 border-emerald-500/30 text-emerald-300"
-                        : "bg-red-950/40 border-red-500/30 text-red-300"
-                    }`}
-                  >
-                    {status.type === "success" ? (
-                      <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                    ) : (
-                      <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                    )}
-                    <div>
-                      <p className="font-bold">{status.type === "success" ? "Request Submitted Successfully!" : "Submission Issue"}</p>
-                      <p className="text-xs mt-1 leading-relaxed">{status.message}</p>
-                    </div>
-                  </div>
-                )}
-
-                <form onSubmit={handleFormSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="name-input" className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Your Name <span className="text-brand-crimson">*</span></label>
-                      <input
-                        id="name-input"
-                        type="text"
-                        name="name"
-                        required
-                        placeholder="e.g. Elena Ramirez"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className="w-full bg-[#171717] border border-brand-charcoal focus:border-brand-crimson rounded-lg px-4 py-3 text-brand-offwhite text-sm focus:outline-none transition-all"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="phone-input" className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Phone Number <span className="text-brand-crimson">*</span></label>
-                      <input
-                        id="phone-input"
-                        type="tel"
-                        name="phone"
-                        required
-                        placeholder="e.g. 719.250.1717"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className="w-full bg-[#171717] border border-brand-charcoal focus:border-brand-crimson rounded-lg px-4 py-3 text-brand-offwhite text-sm focus:outline-none transition-all"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="email-input" className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Email Address</label>
-                      <input
-                        id="email-input"
-                        type="email"
-                        name="email"
-                        placeholder="e.g. client@colorado.com"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="w-full bg-[#171717] border border-brand-charcoal focus:border-brand-crimson rounded-lg px-4 py-3 text-brand-offwhite text-sm focus:outline-none transition-all"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="service-type-input" className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Service Type <span className="text-brand-crimson">*</span></label>
-                      <select
-                        id="service-type-input"
-                        name="serviceType"
-                        value={formData.serviceType}
-                        onChange={handleInputChange}
-                        className="w-full bg-[#171717] border border-brand-charcoal focus:border-brand-crimson rounded-lg px-4 py-3 text-brand-offwhite text-sm focus:outline-none transition-all cursor-pointer"
-                      >
-                        <option value="daycare-cleaning">Preschool / Daycare Cleaning</option>
-                        <option value="airbnb-cleaning">Airbnb Turnover Cleaning</option>
-                        <option value="residential-cleaning">Residential House Deep Clean</option>
-                        <option value="junk-removal">Junk Removal &amp; Hauling</option>
-                        <option value="other">Multiple Services / Other</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Preferred Contact Method</label>
-                    <div className="flex gap-4">
-                      {["Phone Call", "Text Message", "Email"].map((method) => (
-                        <label key={method} className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
-                          <input
-                            type="radio"
-                            name="preferredContact"
-                            value={method}
-                            checked={formData.preferredContact === method}
-                            onChange={handleInputChange}
-                            className="text-brand-crimson accent-brand-crimson focus:ring-brand-crimson"
-                          />
-                          <span>{method}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="message-input" className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Message / Job Size / Competitor Price <span className="text-brand-crimson">*</span></label>
-                    <textarea
-                      id="message-input"
-                      name="message"
-                      required
-                      rows={4}
-                      placeholder="Give us information about your space or describe what competitor's rate we are beating! (e.g., Daycare square footage, Airbnb frequency, volume of junk, etc.)"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      className="w-full bg-[#171717] border border-brand-charcoal focus:border-brand-crimson rounded-lg px-4 py-3 text-brand-offwhite text-sm focus:outline-none transition-all resize-none"
-                    ></textarea>
-                  </div>
-
+            {faqsData.map((faq, idx) => {
+              const isOpen = faqOpen === idx;
+              return (
+                <div key={idx} className="faq-item" data-open={isOpen ? "true" : "false"}>
                   <button
-                    id="submit-estimate-form"
-                    type="submit"
-                    disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-brand-amber-start to-brand-amber-end hover:brightness-110 text-white py-4 rounded-xl font-display font-black uppercase tracking-wider transition-all cursor-pointer disabled:opacity-50"
+                    onClick={() => setFaqOpen(isOpen ? null : idx)}
+                    className="w-full flex items-center justify-between p-6 text-left font-bold text-white hover:text-brand-crimson transition-colors cursor-pointer"
                   >
-                    {loading ? (
-                      <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        <span>Submitting Request...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5 text-white" />
-                        <span>Lock In My Estimate</span>
-                      </>
-                    )}
+                    <span className="text-base tracking-tight">{faq.question}</span>
+                    <span className="text-xl leading-none text-brand-crimson ml-4">{isOpen ? "−" : "+"}</span>
                   </button>
-                </form>
-
-              </div>
-            </div>
-
+                  {isOpen && (
+                    <div className="px-6 pb-6 text-brand-grey text-sm leading-relaxed animate-fadeIn border-t border-brand-border/40 pt-4">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-brand-dark pt-16 pb-24 md:pb-12 border-t border-brand-charcoal relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ─── Contact & Estimate Form ─── */}
+      <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 bg-brand-bg border-t border-brand-border relative">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
           
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 border-b border-brand-charcoal pb-12">
-            
-            {/* Column 1: Logo & Brief */}
-            <div className="md:col-span-5 space-y-4">
-              <Logo className="h-16 w-auto" glow={true} />
-              
-              <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
-                Denver, Castle Rock, Pueblo, and Colorado Springs premium sanitation and haul standard. Fully insured, child and pet-friendly. We Beat Any Competitor Quote!
+          {/* Left Column: Direct Call Cards */}
+          <div className="lg:col-span-5 flex flex-col justify-between gap-8">
+            <div className="flex flex-col gap-4">
+              <span className="section-label">Get In Touch</span>
+              <h2 className="display-heading text-3xl sm:text-4xl">
+                Book Your Free Estimate.
+              </h2>
+              <p className="body-text text-sm mt-2">
+                No hidden fees, no upcharges. Reach our founders directly. Letty is ready to coordinate in Spanish, and Jozette is available to organize estimates.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              {/* Letty Card */}
+              <div className="contact-card">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <span className="text-[10px] font-mono text-brand-crimson uppercase tracking-widest font-bold">Co-Founder</span>
+                    <h4 className="text-lg font-bold text-white mt-1">Letty Silva</h4>
+                  </div>
+                  <span className="text-[9px] font-mono bg-brand-crimson/10 border border-brand-crimson/30 text-brand-crimson px-2.5 py-0.5 rounded font-bold uppercase tracking-wider">
+                    Hablo Español
+                  </span>
+                </div>
+                <a
+                  href="tel:7192501717"
+                  className="inline-flex items-center gap-2 mt-4 text-[#ffffff] hover:text-brand-crimson font-mono text-lg font-bold"
+                >
+                  <Phone className="w-4 h-4 text-brand-crimson" />
+                  719.250.1717
+                </a>
+              </div>
+
+              {/* Jozette Card */}
+              <div className="contact-card border-l-[#cc1a1a]">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <span className="text-[10px] font-mono text-brand-crimson uppercase tracking-widest font-bold">Co-Founder</span>
+                    <h4 className="text-lg font-bold text-white mt-1">Jozette</h4>
+                  </div>
+                  <span className="text-[9px] font-mono bg-brand-surface-2 border border-brand-border text-brand-grey px-2.5 py-0.5 rounded font-bold uppercase tracking-wider">
+                    English Service
+                  </span>
+                </div>
+                <a
+                  href="tel:3032422695"
+                  className="inline-flex items-center gap-2 mt-4 text-[#ffffff] hover:text-brand-crimson font-mono text-lg font-bold"
+                >
+                  <Phone className="w-4 h-4 text-brand-crimson" />
+                  303.242.2695
+                </a>
+              </div>
+            </div>
+
+            <div className="p-4 bg-brand-surface border border-brand-border rounded-xl flex items-center gap-4">
+              <div className="w-8 h-8 rounded-lg bg-brand-surface-2 flex items-center justify-center text-brand-crimson">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div className="text-xs">
+                <h5 className="font-bold text-white">Fully Insured &amp; Certified</h5>
+                <p className="text-brand-grey mt-0.5">preschool and residential standard.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Dynamic Form */}
+          <div className="lg:col-span-7">
+            <div className="bg-brand-surface border border-brand-border rounded-[24px] p-8 md:p-12 shadow-2xl">
+              <h3 className="text-xl font-bold text-white mb-2">Send Estimate Request</h3>
+              <p className="text-xs text-brand-grey mb-8">
+                Fill in your project specifications. Our founders will review your job details and lock in your estimate.
               </p>
 
-              <div className="flex gap-4 text-xs font-mono text-gray-400">
-                <span>© {new Date().getFullYear()} L&amp;J Prestige.</span>
-                <span>All rights reserved.</span>
-              </div>
-            </div>
-
-            {/* Column 2: Quick Links */}
-            <div className="md:col-span-3">
-              <h4 className="font-display font-extrabold text-sm text-[#FFF] uppercase tracking-widest mb-4">
-                Services
-              </h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <a href="#services" className="hover:text-brand-amber-start transition-colors">Preschool &amp; Daycare Clean</a>
-                </li>
-                <li>
-                  <a href="#services" className="hover:text-brand-amber-start transition-colors">Airbnb Turnover Staging</a>
-                </li>
-                <li>
-                  <a href="#services" className="hover:text-brand-amber-start transition-colors">Residential Custom Detail</a>
-                </li>
-                <li>
-                  <a href="#services" className="hover:text-brand-amber-start transition-colors">Junk Removal &amp; Purge</a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Column 3: Contacts */}
-            <div className="md:col-span-4 spacing-y-4">
-              <h4 className="font-display font-extrabold text-sm text-[#FFF] uppercase tracking-widest mb-4">
-                Colorado Service Lines
-              </h4>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-brand-crimson mt-0.5 flex-shrink-0" />
+              {status.type && (
+                <div
+                  className={`p-4 rounded-xl mb-6 flex items-start gap-3 border text-sm ${
+                    status.type === "success"
+                      ? "bg-emerald-950/40 border-emerald-500/30 text-emerald-300"
+                      : "bg-red-950/40 border-red-500/30 text-red-300"
+                  }`}
+                >
+                  {status.type === "success" ? (
+                    <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  ) : (
+                    <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                  )}
                   <div>
-                    <p className="text-xs text-gray-500 font-bold">LETTY SILVA (Habla Español)</p>
-                    <a href="tel:7192501717" className="font-mono text-sm text-[#FFF] hover:text-brand-amber-start font-bold">
-                      719.250.1717
-                    </a>
+                    <p className="font-bold">{status.type === "success" ? "Submitted Successfully!" : "Submission Issue"}</p>
+                    <p className="text-xs mt-1 leading-relaxed">{status.message}</p>
                   </div>
                 </div>
-                
-                <div className="flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-brand-amber-start mt-0.5 flex-shrink-0" />
+              )}
+
+              <form onSubmit={handleFormSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs text-gray-500 font-bold">JOZETTE (English Service)</p>
-                    <a href="tel:3032422695" className="font-mono text-sm text-[#FFF] hover:text-brand-amber-start font-bold">
-                      303.242.2695
-                    </a>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-brand-grey mb-2">Your Name *</label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="e.g. Elena Ramirez"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="form-input"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-brand-grey mb-2">Phone Number *</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      required
+                      placeholder="e.g. 719.250.1717"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="form-input"
+                    />
                   </div>
                 </div>
-              </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-brand-grey mb-2">Email Address</label>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="e.g. client@colorado.com"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="form-input"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-brand-grey mb-2">Service Type *</label>
+                    <select
+                      name="serviceType"
+                      value={formData.serviceType}
+                      onChange={handleInputChange}
+                      className="form-input cursor-pointer"
+                    >
+                      <option value="daycare-cleaning">Preschool / Daycare Cleaning</option>
+                      <option value="airbnb-cleaning">Airbnb Turnover Cleaning</option>
+                      <option value="residential-cleaning">Residential House Deep Clean</option>
+                      <option value="junk-removal">Junk Removal &amp; Hauling</option>
+                      <option value="other">Multiple Services / Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-brand-grey mb-2">Preferred Contact Method</label>
+                  <div className="flex gap-6">
+                    {["Phone Call", "Text Message", "Email"].map((method) => (
+                      <label key={method} className="flex items-center gap-2 text-xs text-brand-offwhite cursor-pointer">
+                        <input
+                          type="radio"
+                          name="preferredContact"
+                          value={method}
+                          checked={formData.preferredContact === method}
+                          onChange={handleInputChange}
+                          className="accent-brand-crimson"
+                        />
+                        <span>{method}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-brand-grey mb-2">Message / Job Size *</label>
+                  <textarea
+                    name="message"
+                    required
+                    rows={4}
+                    placeholder="Describe daycare sizes, Airbnb checkout dates, bulk volume of junk, or rival price quotes..."
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    className="form-input resize-none"
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="btn-crimson w-full py-4 rounded-full font-bold uppercase tracking-wider transition-all disabled:opacity-50 text-sm flex items-center justify-center gap-2"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span>Submitting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 text-white" />
+                      <span>Lock In My Estimate</span>
+                    </>
+                  )}
+                </button>
+              </form>
             </div>
-
           </div>
 
-          <div className="pt-8 text-center text-xs text-gray-600 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p>Colorado Department of Early Childhood Compliant • Fully Insured Operating Crews</p>
-            <p className="text-[10px] uppercase tracking-widest">
-              Sparkle Decoration Style Logo Aesthetic Verified
-            </p>
-          </div>
+        </div>
+      </section>
 
+      {/* ─── Footer ─── */}
+      <footer className="bg-brand-bg pt-16 pb-12 border-t border-brand-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-brand-border pb-12">
+            <div className="flex flex-col gap-2">
+              <span className="font-extrabold text-xl tracking-tight text-white uppercase">L&amp;J Prestige</span>
+              <p className="text-xs text-brand-grey max-w-sm">
+                Denver, Pueblo, and Colorado Springs premium sanitation and haulage. we beat any competitor quote.
+              </p>
+            </div>
+            <div className="flex gap-8 text-xs font-mono text-[#444]">
+              <span>© {new Date().getFullYear()} L&amp;J Prestige</span>
+              <span>All rights reserved.</span>
+            </div>
+          </div>
+          <div className="pt-8 text-center text-[10px] text-[#444] uppercase tracking-wider">
+            Colorado Department of Early Childhood Compliant · Licensed Operating Crews
+          </div>
         </div>
       </footer>
 
-      {/* Floating Free Estimate Sticky Button bottom-right in Amber */}
-      <button
-        id="floating-estimate-button"
-        onClick={() => {
-          const element = document.getElementById("contact");
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-          }
-        }}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 bg-gradient-to-r from-brand-amber-start to-brand-amber-end hover:brightness-110 text-white font-display font-extrabold text-sm px-5 py-3.5 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 cursor-pointer border border-brand-crimson/30"
-        title="Get A Free Estimate"
+      {/* ─── Sticky Call CTA ─── */}
+      <a
+        href="tel:7192501717"
+        className="fixed bottom-6 right-6 z-40 bg-brand-crimson hover:bg-brand-crimson-dark text-white font-bold text-sm px-6 py-3.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 border border-red-900/50"
       >
-        <Sparkles className="w-5 h-5 fill-white text-white animate-spin-slow" />
+        <Phone className="w-4 h-4" />
         <span>Free Estimate</span>
-      </button>
+      </a>
 
-      {/* Quick service click estimate modal popup */}
+      {/* ─── Modal Popup for instant estimates ─── */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-[#121212] border border-brand-charcoal w-full max-w-xl rounded-2xl p-6 sm:p-8 relative shadow-2xl">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-brand-surface border border-brand-border w-full max-w-lg rounded-[24px] p-8 relative shadow-2xl">
             <button
               onClick={() => setModalOpen(false)}
-              className="absolute top-4 right-4 p-1.5 text-gray-400 hover:text-white bg-brand-charcoal hover:bg-brand-crimson rounded-lg transition-colors cursor-pointer"
+              className="absolute top-4 right-4 p-1.5 text-brand-grey hover:text-white bg-brand-surface-2 hover:bg-brand-crimson rounded-lg transition-colors cursor-pointer"
             >
-              <X className="w-4.5 h-4.5" />
+              <X className="w-4 h-4" />
             </button>
 
-            <h3 className="text-xl font-display font-extrabold text-brand-offwhite mb-2">
-              Estimate for <span className="text-brand-amber-start">
-                {servicesData.find((s) => s.id === formData.serviceType)?.title || "L&J Prestige Services"}
+            <h3 className="text-xl font-bold text-white mb-2">
+              Estimate for <span className="text-brand-crimson">
+                {servicesData.find((s) => s.id === formData.serviceType)?.title || "Services"}
               </span>
             </h3>
             
-            <p className="text-xs text-gray-400 mb-6 leading-relaxed">
-              We beat any competitor price. Let us know a few details, and Letty or Jozette will coordinate your quote instantly.
+            <p className="text-xs text-brand-grey mb-6 leading-relaxed">
+              We beat any competitor price. Let us know a few details, and we will coordinate your quote instantly.
             </p>
 
             <form onSubmit={handleFormSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Your Name</label>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-brand-grey mb-1">Your Name</label>
                 <input
                   type="text"
                   name="name"
@@ -1125,12 +850,12 @@ export default function App() {
                   placeholder="Elena Ramirez"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full bg-[#171717] border border-brand-charcoal focus:border-brand-crimson rounded-lg px-4 py-2.5 text-sm my-1 text-white focus:outline-none"
+                  className="form-input"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Phone Number</label>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-brand-grey mb-1">Phone Number</label>
                 <input
                   type="tel"
                   name="phone"
@@ -1138,36 +863,34 @@ export default function App() {
                   placeholder="719.250.1717"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full bg-[#171717] border border-brand-charcoal focus:border-brand-crimson rounded-lg px-4 py-2.5 text-sm my-1 text-white focus:outline-none"
+                  className="form-input"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Message / Project details</label>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-brand-grey mb-1">Project Details</label>
                 <textarea
                   name="message"
                   required
                   rows={3}
-                  placeholder="Daycare size, Airbnb checklist, quantity of junk to haul, or rival quote etc."
+                  placeholder="Daycare size, Airbnb frequency, volume of junk to haul, or rival quotes..."
                   value={formData.message}
                   onChange={handleInputChange}
-                  className="w-full bg-[#171717] border border-brand-charcoal focus:border-brand-crimson rounded-lg px-4 py-2.5 text-sm my-1 text-white focus:outline-none resize-none"
+                  className="form-input resize-none"
                 ></textarea>
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-brand-amber-start to-brand-amber-end text-white py-3 rounded-xl font-display font-bold text-sm tracking-wide uppercase transition-all hover:opacity-90 disabled:opacity-50"
+                className="btn-crimson w-full py-3 rounded-full font-bold text-sm tracking-wide uppercase transition-all disabled:opacity-50"
               >
-                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-4 h-4 text-white" />}
-                <span>Send Estimate Request</span>
+                {loading ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : <span>Send Estimate Request</span>}
               </button>
             </form>
           </div>
         </div>
       )}
-
     </div>
   );
 }

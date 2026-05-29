@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Logo from "./Logo";
-import { Phone, Menu, X, Sparkles } from "lucide-react";
+import { Phone, Menu, X } from "lucide-react";
+
+const navLinks = [
+  { id: "home", label: "Home" },
+  { id: "services", label: "Services" },
+  { id: "about", label: "About" },
+  { id: "contact", label: "Contact" },
+];
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,235 +14,336 @@ export default function Header() {
   const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+    const onScroll = () => {
+      setScrolled(window.scrollY > 32);
 
-      // Determine active section based on proximity
       const sections = ["home", "services", "about", "faq", "contact"];
-      const scrollPos = window.scrollY + 100;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const top = element.offsetTop;
-          const height = element.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(section);
+      const scrollPos = window.scrollY + 120;
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const { offsetTop, offsetHeight } = el;
+          if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
+            setActiveSection(id);
           }
         }
       }
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
+  const scrollTo = (id: string) => {
     setIsOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-brand-dark/95 backdrop-blur-md pb-1.5 border-b border-brand-charcoal shadow-xl"
-          : "bg-gradient-to-b from-brand-dark via-brand-dark/40 to-transparent pb-2"
-      }`}
-    >
-      {/* Elegant Deluxe Announcement Strip */}
-      <div className="bg-black/80 border-b border-brand-amber-start/10 py-1.5 px-4 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-[9px] sm:text-[10px] md:text-[11px] font-sans tracking-[0.2em] font-medium text-brand-amber-start uppercase">
-          <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-crimson animate-pulse"></span>
-            Small Family-Owned Business
-          </span>
-          <span className="text-brand-charcoal select-none hidden sm:inline">•</span>
-          <span className="flex items-center gap-1.5 text-brand-offwhite">
-            <Sparkles className="w-3.5 h-3.5 text-brand-amber-end fill-brand-amber-end animate-pulse" />
-            100% Licensed &amp; Insured
-          </span>
-          <span className="text-brand-charcoal select-none hidden md:inline">•</span>
-          <span className="text-gray-400 hidden md:inline">
-            Colorado Springs • Denver Metro • Pueblo
-          </span>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          
-          {/* Logo Section */}
-          <div className="flex-shrink-0 cursor-pointer" onClick={() => scrollToSection("home")}>
-            <div className="flex items-center gap-2">
-              <Logo className="h-10 w-auto md:h-12" />
-            </div>
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <button
-              onClick={() => scrollToSection("home")}
-              className={`font-display text-sm font-semibold tracking-wider uppercase transition-colors duration-200 cursor-pointer ${
-                activeSection === "home" ? "text-brand-crimson" : "text-brand-offwhite hover:text-brand-amber-start"
-              }`}
-            >
-              Home
-            </button>
-            <button
-              onClick={() => scrollToSection("services")}
-              className={`font-display text-sm font-semibold tracking-wider uppercase transition-colors duration-200 cursor-pointer ${
-                activeSection === "services" ? "text-brand-crimson" : "text-brand-offwhite hover:text-brand-amber-start"
-              }`}
-            >
-              Services
-            </button>
-            <button
-              onClick={() => scrollToSection("about")}
-              className={`font-display text-sm font-semibold tracking-wider uppercase transition-colors duration-200 cursor-pointer ${
-                activeSection === "about" ? "text-brand-crimson" : "text-brand-offwhite hover:text-brand-amber-start"
-              }`}
-            >
-              About Us
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className={`font-display text-sm font-semibold tracking-wider uppercase transition-colors duration-200 cursor-pointer ${
-                activeSection === "contact" ? "text-brand-crimson" : "text-brand-offwhite hover:text-brand-amber-start"
-              }`}
-            >
-              Contact
-            </button>
-          </nav>
-
-          {/* Call-to-Action Action Area */}
-          <div className="hidden lg:flex items-center gap-4">
-            <a
-              href="tel:7192501717"
-              className="flex items-center gap-2 bg-brand-crimson/10 border border-brand-crimson/30 hover:bg-brand-crimson/25 px-4 py-2 rounded-lg text-brand-offwhite text-sm font-display font-medium tracking-wide transition-all duration-200"
-            >
-              <Phone className="w-4 h-4 text-brand-crimson" />
-              <div className="text-left font-mono">
-                <span className="block text-[10px] text-gray-400 uppercase font-sans font-bold leading-none">Letty (Español)</span>
-                719.250.1717
-              </div>
-            </a>
-            <a
-              href="tel:3032422695"
-              className="flex items-center gap-2 bg-gradient-to-r from-brand-amber-start/10 to-brand-amber-end/10 border border-brand-amber-start/30 hover:from-brand-amber-start/20 hover:to-brand-amber-end/20 px-4 py-2 rounded-lg text-brand-offwhite text-sm font-display font-medium tracking-wide transition-all duration-200"
-            >
-              <Phone className="w-4 h-4 text-brand-amber-start" />
-              <div className="text-left font-mono">
-                <span className="block text-[10px] text-gray-400 uppercase font-sans font-bold leading-none">Jozette</span>
-                303.242.2695
-              </div>
-            </a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-3">
-            <a
-              href="tel:7192501717"
-              className="p-2.5 rounded-full bg-brand-crimson hover:bg-brand-crimson/80 text-brand-offwhite transition-colors"
-              title="Call Letty"
-            >
-              <Phone className="w-4 h-4" />
-            </a>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2.5 rounded-lg border border-brand-charcoal text-white hover:bg-brand-charcoal hover:text-brand-amber-start transition-colors cursor-pointer"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Drawer (Polished overlay) */}
+    <>
+      {/* ── Announcement Strip ── */}
       <div
-        className={`fixed inset-0 top-[102px] bg-brand-dark/98 backdrop-blur-lg z-40 transition-transform duration-300 md:hidden border-t border-brand-charcoal ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+        style={{ background: "rgba(179,0,0,0.08)", borderBottom: "1px solid rgba(179,0,0,0.15)" }}
+        className="fixed top-0 left-0 right-0 z-[60] py-2 px-4"
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-center gap-6 text-[10px] font-sans tracking-[0.15em] font-semibold uppercase">
+          <span className="flex items-center gap-1.5 text-brand-crimson">
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-crimson animate-pulse-glow"></span>
+            Small Family-Owned
+          </span>
+          <span className="text-brand-grey-dark hidden sm:inline">|</span>
+          <span className="text-brand-offwhite hidden sm:inline">100% Licensed &amp; Insured</span>
+          <span className="text-brand-grey-dark hidden md:inline">|</span>
+          <span className="text-brand-grey hidden md:inline">Colorado Springs · Denver · Pueblo · Castle Rock</span>
+        </div>
+      </div>
+
+      {/* ── Main Navbar ── */}
+      <header
+        className={`fixed top-[33px] left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled ? "py-2" : "py-4"
         }`}
       >
-        <div className="flex flex-col h-full justify-between p-6 overflow-y-auto">
-          <div className="space-y-4">
-            {/* Tagline */}
-            <div className="flex items-center gap-2 border-b border-brand-charcoal pb-4 mb-4">
-              <Sparkles className="w-5 h-5 text-brand-amber-end" />
-              <p className="text-xs text-brand-amber-start font-bold uppercase tracking-wider">
-                We Beat Any Price • Free Estimates!
-              </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            className={`flex items-center justify-between transition-all duration-500 ${
+              scrolled
+                ? "nav-glass px-5 py-3"
+                : "bg-transparent px-0 py-2"
+            }`}
+          >
+            {/* Logo */}
+            <button
+              onClick={() => scrollTo("home")}
+              className="flex items-center gap-2.5 cursor-pointer group"
+              aria-label="L&J Prestige Home"
+            >
+              <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  background: "#B30000",
+                  borderRadius: 8,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  transition: "background 200ms ease",
+                }}
+                className="group-hover:bg-brand-crimson-dark"
+              >
+                <span
+                  style={{
+                    fontFamily: "Outfit, sans-serif",
+                    fontWeight: 900,
+                    fontSize: 14,
+                    color: "#fff",
+                    letterSpacing: "-0.03em",
+                  }}
+                >
+                  L&amp;J
+                </span>
+              </div>
+              <div>
+                <p
+                  style={{
+                    fontFamily: "Outfit, sans-serif",
+                    fontWeight: 800,
+                    fontSize: 15,
+                    color: "#F5F5F5",
+                    lineHeight: 1.1,
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  Prestige
+                </p>
+                <p
+                  style={{
+                    fontFamily: "JetBrains Mono, monospace",
+                    fontSize: 9,
+                    color: "#B30000",
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Cleaning &amp; Hauling
+                </p>
+              </div>
+            </button>
+
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center gap-7">
+              {navLinks.map(({ id, label }) => (
+                <button
+                  key={id}
+                  onClick={() => scrollTo(id)}
+                  className="cursor-pointer"
+                  style={{
+                    fontFamily: "Outfit, sans-serif",
+                    fontSize: 13,
+                    fontWeight: 500,
+                    letterSpacing: "0.04em",
+                    textTransform: "uppercase",
+                    color: activeSection === id ? "#B30000" : "#888",
+                    transition: "color 200ms ease",
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                  }}
+                  onMouseEnter={e => { if (activeSection !== id) (e.currentTarget as HTMLElement).style.color = "#F5F5F5"; }}
+                  onMouseLeave={e => { if (activeSection !== id) (e.currentTarget as HTMLElement).style.color = "#888"; }}
+                >
+                  {label}
+                </button>
+              ))}
+            </nav>
+
+            {/* Desktop CTAs */}
+            <div className="hidden lg:flex items-center gap-3">
+              <a
+                href="tel:7192501717"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "8px 16px",
+                  borderRadius: 9999,
+                  border: "1px solid rgba(179,0,0,0.35)",
+                  background: "rgba(179,0,0,0.08)",
+                  color: "#F5F5F5",
+                  textDecoration: "none",
+                  transition: "all 200ms ease",
+                  fontFamily: "Outfit, sans-serif",
+                  fontSize: 13,
+                  fontWeight: 600,
+                }}
+                onMouseEnter={e => Object.assign((e.currentTarget as HTMLElement).style, { borderColor: "#B30000", background: "rgba(179,0,0,0.18)" })}
+                onMouseLeave={e => Object.assign((e.currentTarget as HTMLElement).style, { borderColor: "rgba(179,0,0,0.35)", background: "rgba(179,0,0,0.08)" })}
+              >
+                <Phone style={{ width: 13, height: 13, color: "#B30000" }} />
+                <span>719.250.1717</span>
+              </a>
+              <button
+                onClick={() => scrollTo("contact")}
+                className="btn-crimson cursor-pointer"
+                style={{
+                  padding: "9px 20px",
+                  borderRadius: 9999,
+                  fontFamily: "Outfit, sans-serif",
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: "0.03em",
+                  border: "none",
+                }}
+              >
+                Free Estimate
+              </button>
             </div>
 
-            <button
-              onClick={() => scrollToSection("home")}
-              className={`block w-full text-left py-3 px-4 rounded-xl font-display text-lg font-bold uppercase tracking-wide transition-colors ${
-                activeSection === "home" ? "bg-brand-crimson/10 text-brand-crimson border-l-4 border-brand-crimson" : "text-brand-offwhite hover:bg-brand-charcoal/50"
-              }`}
-            >
-              Home
-            </button>
-            <button
-              onClick={() => scrollToSection("services")}
-              className={`block w-full text-left py-3 px-4 rounded-xl font-display text-lg font-bold uppercase tracking-wide transition-colors ${
-                activeSection === "services" ? "bg-brand-crimson/10 text-brand-crimson border-l-4 border-brand-crimson" : "text-brand-offwhite hover:bg-brand-charcoal/50"
-              }`}
-            >
-              Services
-            </button>
-            <button
-              onClick={() => scrollToSection("about")}
-              className={`block w-full text-left py-3 px-4 rounded-xl font-display text-lg font-bold uppercase tracking-wide transition-colors ${
-                activeSection === "about" ? "bg-brand-crimson/10 text-brand-crimson border-l-4 border-brand-crimson" : "text-brand-offwhite hover:bg-brand-charcoal/50"
-              }`}
-            >
-              About Us
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className={`block w-full text-left py-3 px-4 rounded-xl font-display text-lg font-bold uppercase tracking-wide transition-colors ${
-                activeSection === "contact" ? "bg-brand-crimson/10 text-brand-crimson border-l-4 border-brand-crimson" : "text-brand-offwhite hover:bg-brand-charcoal/50"
-              }`}
-            >
-              Contact
-            </button>
-          </div>
-
-          {/* Quick Contacts inside Hamburger Menu */}
-          <div className="border-t border-brand-charcoal pt-6 pb-20 space-y-4">
-            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-widest text-center mb-2">Speak Directly With Us</h4>
-            
-            <a
-              href="tel:7192501717"
-              className="flex items-center justify-between bg-brand-crimson px-5 py-4 rounded-xl text-white font-display font-black text-lg transition-all shadow-md active:scale-95"
-            >
-              <span className="flex items-center gap-3">
-                <Phone className="w-5 h-5 animate-pulse" />
-                <span>Call Letty <span className="text-xs font-normal opacity-90 block">Hablo Español</span></span>
-              </span>
-              <span className="font-mono text-base tracking-wider text-black bg-white/90 px-2 py-0.5 rounded">719.250.1717</span>
-            </a>
-
-            <a
-              href="tel:3032422695"
-              className="flex items-center justify-between bg-gradient-to-r from-brand-amber-start to-brand-amber-end px-5 py-4 rounded-xl text-black font-display font-black text-lg transition-all shadow-md active:scale-95"
-            >
-              <span className="flex items-center gap-3">
-                <Phone className="w-5 h-5" />
-                <span>Call Jozette <span className="text-xs font-normal opacity-70 block font-sans">English Service</span></span>
-              </span>
-              <span className="font-mono text-base tracking-wider text-black bg-white/70 px-2 py-0.5 rounded">303.242.2695</span>
-            </a>
+            {/* Mobile Buttons */}
+            <div className="flex lg:hidden items-center gap-2">
+              <a
+                href="tel:7192501717"
+                style={{
+                  padding: "8px 14px",
+                  borderRadius: 9999,
+                  background: "#B30000",
+                  color: "#fff",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  fontFamily: "Outfit, sans-serif",
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
+                <Phone style={{ width: 13, height: 13 }} />
+                Call
+              </a>
+              <button
+                id="mobile-menu-button"
+                onClick={() => setIsOpen(!isOpen)}
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: 8,
+                  border: "1px solid #2a2a2a",
+                  background: "#111",
+                  color: "#F5F5F5",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  transition: "background 200ms ease",
+                }}
+              >
+                {isOpen ? <X style={{ width: 18, height: 18 }} /> : <Menu style={{ width: 18, height: 18 }} />}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </header>
+
+        {/* Mobile Drawer */}
+        <div
+          style={{
+            position: "fixed",
+            inset: "0",
+            top: "33px",
+            background: "rgba(5,5,5,0.97)",
+            backdropFilter: "blur(24px)",
+            WebkitBackdropFilter: "blur(24px)",
+            zIndex: 40,
+            transition: "opacity 300ms ease, transform 300ms cubic-bezier(0.16,1,0.3,1)",
+            opacity: isOpen ? 1 : 0,
+            transform: isOpen ? "translateY(0)" : "translateY(-8px)",
+            pointerEvents: isOpen ? "all" : "none",
+          }}
+          className="md:hidden"
+        >
+          <div className="flex flex-col h-full pt-20 px-6 pb-10 gap-2">
+            {navLinks.map(({ id, label }, i) => (
+              <button
+                key={id}
+                onClick={() => scrollTo(id)}
+                className="cursor-pointer text-left"
+                style={{
+                  fontFamily: "Outfit, sans-serif",
+                  fontSize: 28,
+                  fontWeight: 800,
+                  letterSpacing: "-0.02em",
+                  color: activeSection === id ? "#B30000" : "#F5F5F5",
+                  background: "none",
+                  border: "none",
+                  padding: "12px 0",
+                  borderBottom: "1px solid #1a1a1a",
+                  display: "block",
+                  width: "100%",
+                  animation: isOpen ? `fadeUp 0.5s ${i * 60}ms both` : "none",
+                  transition: "color 200ms ease",
+                }}
+                onMouseEnter={e => { if (activeSection !== id) (e.currentTarget as HTMLElement).style.color = "#B30000"; }}
+                onMouseLeave={e => { if (activeSection !== id) (e.currentTarget as HTMLElement).style.color = "#F5F5F5"; }}
+              >
+                {label}
+              </button>
+            ))}
+
+            <div className="mt-auto flex flex-col gap-3 pt-8">
+              <a
+                href="tel:7192501717"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "16px 20px",
+                  borderRadius: 12,
+                  background: "#B30000",
+                  color: "#fff",
+                  textDecoration: "none",
+                  fontFamily: "Outfit, sans-serif",
+                  fontWeight: 700,
+                  fontSize: 16,
+                  transition: "background 200ms ease",
+                  activeOpacity: 0.9,
+                }}
+              >
+                <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <Phone style={{ width: 18, height: 18 }} />
+                  Call Letty (Español)
+                </span>
+                <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 14 }}>
+                  719.250.1717
+                </span>
+              </a>
+              <a
+                href="tel:3032422695"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "16px 20px",
+                  borderRadius: 12,
+                  border: "1px solid #2a2a2a",
+                  background: "#111",
+                  color: "#F5F5F5",
+                  textDecoration: "none",
+                  fontFamily: "Outfit, sans-serif",
+                  fontWeight: 700,
+                  fontSize: 16,
+                }}
+              >
+                <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <Phone style={{ width: 18, height: 18, color: "#888" }} />
+                  Call Jozette (English)
+                </span>
+                <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 14 }}>
+                  303.242.2695
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+    </>
   );
 }
