@@ -4,13 +4,12 @@ export const servicesData: Service[] = [
   {
     id: "daycare-cleaning",
     title: "Preschool & Daycare Cleaning",
-    description: "Ultra-precise disinfection using certified child-safe products. Health-compliant protection for Colorado's youngest learners.",
+    description: "Ultra-precise sanitization using certified child-safe products. Fully compliant with Colorado Department of Early Childhood rules.",
     details: [
       "100% child-safe, non-toxic sanitizing agents",
-      "Deep disinfection of restrooms, toys, and touchpoints",
-      "Saves preschools from respiratory germs and seasonal spread",
-      "Fully compliant with Colorado Department of Human Services rules",
-      "HEPA-filter air dusting & carpet sterilization"
+      "Deep disinfection of toys, touchpoints, and restrooms",
+      "HEPA-filter air dusting & carpet sterilization",
+      "Saves preschools from germs and seasonal spread"
     ],
     iconName: "Baby",
     imageUrl: "/images/daycare_clean_1780019670393.png"
@@ -18,44 +17,74 @@ export const servicesData: Service[] = [
   {
     id: "airbnb-cleaning",
     title: "Airbnb Turnover Cleaning",
-    description: "Five-star rapid cleaning standard designed to elevate guest reviews, secure Superhost status, and guarantee fast check-in turnaround.",
+    description: "Five-star rapid cleaning standard designed to elevate guest reviews, secure Superhost status, and guarantee fast turnaround resets.",
     details: [
       "Rapid checkout reset same-day coordination",
       "Linens, towels, and sheets washed and premium staged",
-      "Toiletries, coffee, and welcome amenities restocked",
-      "Detailed damage checks with instant photographic updates",
-      "Odor removal and sparkling high-end detail inspection"
+      "Coffee, toiletries, and amenities restocked",
+      "Damage checks with instant photographic updates"
     ],
     iconName: "HomeStar",
     imageUrl: "/images/airbnb_turnover_1780019691921.png"
   },
   {
     id: "residential-cleaning",
-    title: "Residential Cleaning",
-    description: "Premium house detailing tailored around your lifestyle. Spotless results from baseboards to ceiling fans with a tailored schedule.",
+    title: "Residential Cleaning & Maid Service",
+    description: "Premium house detailing and routine maid services. Spotless results from baseboards, windows, range hoods to ceiling fans.",
     details: [
       "Kitchen appliances, stoves, countertops detailed shine",
-      "Showers, tubs, and bathroom grout meticulously scrubbed",
-      "Dusting of intricate fixtures, blinds, and vents",
-      "Vacuuming, floor wood steaming, and micro-fiber polishing",
-      "Custom routine maid maintenance (Weekly, Bi-weekly, Monthly)"
+      "Showers, tubs, bathroom grout scrubbed clean",
+      "Dusting of intricate fixtures, vents, and blinds",
+      "Weekly, bi-weekly, or monthly recurring schedules"
     ],
     iconName: "Sparkles",
     imageUrl: "/images/residential_clean_1780019711990.png"
   },
   {
     id: "junk-removal",
-    title: "Commercial & Residential Junk Removal",
-    description: "Prompt, heavy-duty hauling that clears clutter, handles cleanouts, and manages debris. Fully insured crews beats franchise pricing.",
+    title: "Junk Removal & Debris Hauling",
+    description: "Prompt, heavy-duty hauling of waste, junk, building materials, and estate cleanouts. Fully licensed crews beating franchise prices.",
     details: [
       "Whole-estate cleanouts, garage and basement purging",
       "Construction debris, yard remnants and timber clearance",
       "Unwanted furniture, appliance and electronics hauling",
-      "Environmentally conscious sorting (Donate, Recycle, Haul)",
-      "We Beat Any Price! Bring us any competitor estimate"
+      "Eco-conscious sorting: donate, recycle, and haul"
     ],
     iconName: "Truck",
     imageUrl: "/images/junk_removal_1780019730037.png"
+  }
+];
+
+export const specialtyServices = [
+  {
+    id: "post-construction",
+    title: "Post-Construction Cleanup",
+    description: "Heavy-duty post-renovation detailing. We scrub walls, ceilings, acoustic tiles, range hoods, and remove fine dust and construction adhesives so your space is ready for immediate occupancy.",
+    details: [
+      "Acoustic ceiling & wall tile clean-up",
+      "Adhesives, paint splatters, and heavy dust scrubbing",
+      "Fixtures, baseboards, and window frames polished"
+    ]
+  },
+  {
+    id: "powerwashing",
+    title: "Premium Powerwashing",
+    description: "High-pressure wash for commercial and residential exterior surfaces. We restore driveways, brickwork, walkways, and building siding to peak aesthetic condition.",
+    details: [
+      "Commercial exterior surfaces powerwashing",
+      "Residential brick, siding, and deck restoration",
+      "Oil stain, mold, and grime removal"
+    ]
+  },
+  {
+    id: "chimney-stove",
+    title: "Stove & Chimney Care",
+    description: "Meticulous cleaning and safety inspection for fireplaces, wood-burning stoves, pellet stoves, and oil-fired chimneys. Keep your home safe and warm during Colorado winters.",
+    details: [
+      "Clean & inspect wood burning or pellet stoves",
+      "Oil-fired chimney cleaning & inspection service",
+      "Fireplace cleaning and safety checks"
+    ]
   }
 ];
 
@@ -67,9 +96,9 @@ export const trustBadges: TrustBadge[] = [
     iconName: "TrendingDown"
   },
   {
-    id: "safe-products",
-    title: "Child-Safe Eco Products",
-    description: "Specially formulated pet-friendly and child-safe disinfectants that sanitise with zero toxic trace chemical odors.",
+    id: "emergency-services",
+    title: "Emergency Services Offered",
+    description: "Unexpected messes or urgent cleanouts? We offer prompt, responsive emergency services to keep your space safe.",
     iconName: "ShieldCheck"
   },
   {
@@ -117,52 +146,35 @@ export const reviewsData: Review[] = [
 
 export const faqsData = [
   {
-    question: "Do you offer free estimates for cleaning or junk removal in Colorado Springs?",
-    answer: "Yes! L&J Prestige Cleaning LLC provides free estimates for all cleaning and junk removal services in Colorado Springs, Denver Metro, Castle Rock, and Pueblo. Contact Letty at 719-250-1717 or submit our online form for a same-day response. No obligation, ever."
+    question: "Do you offer free estimates for cleaning or junk removal?",
+    answer: "Yes, L&J PRESTIGE CLEANING LLC offers free project estimates for all our services, including residential house cleaning, post-construction cleanup, powerwashing, and debris hauling. Call Letty at 719-250-1717 or fill out our online form to request your estimate."
   },
   {
-    question: "What is the 'We Beat Any Price' guarantee?",
-    answer: "Present any active written cleaning or junk removal estimate from a licensed competitor in Colorado. We will review the scope and beat their price while maintaining our premium quality standard. This applies to Airbnb turnovers, daycare cleaning, residential cleans, and junk removal."
-  },
-  {
-    question: "Are your cleaning products safe for children and pets?",
-    answer: "Absolutely. We use 100% non-toxic, eco-friendly disinfectants that are free of harsh chemical fumes and residue. Our child-safe product line is especially important for our daycare and preschool clients. All products are also pet-friendly and leave no harmful traces."
-  },
-  {
-    question: "What cities in Colorado do you service?",
-    answer: "We cover the entire Colorado Front Range including Colorado Springs, Denver Metro, Castle Rock, Pueblo, and surrounding mountain residential communities. Call 719-250-1717 to confirm availability in your specific area."
-  },
-  {
-    question: "What types of junk do you haul away?",
-    answer: "We haul almost everything — furniture, appliances, electronics, construction debris, yard waste, timber, estate cleanout items, and general household junk. We also handle full garage, basement, and attic purges. Items are sorted responsibly: donated, recycled, or hauled. We do not haul hazardous waste or chemicals."
-  },
-  {
-    question: "Can you do same-day or next-day junk removal?",
-    answer: "Yes! Same-day and next-day junk removal is available in Colorado Springs and surrounding areas based on crew availability. Call or text Jozette at 719-425-8551 and we will do our best to accommodate your timeline."
+    question: "What are your service hours? Do you offer emergency services?",
+    answer: "Yes! L&J PRESTIGE CLEANING LLC is open all day, 7 days a week (Sunday through Saturday). We offer dedicated emergency services for urgent clean-ups, same-day move-out cleanings, or fast debris removal needs across the Colorado Front Range."
   },
   {
     question: "Are you licensed and insured?",
-    answer: "Yes, L&J Prestige Cleaning LLC is a fully licensed LLC in Colorado and our crews operate with full insurance coverage. Our daycare cleaning services are compliant with Colorado Department of Early Childhood standards."
+    answer: "Yes. L&J Prestige Cleaning LLC is a fully licensed LLC in Colorado, and our crews operate with comprehensive liability insurance coverage. We prioritize safety and child-safe environments on every single job."
   },
   {
-    question: "Do you offer recurring cleaning schedules?",
-    answer: "Yes! We offer weekly, bi-weekly, and monthly recurring residential cleaning plans. Airbnb clients can set up automated turnover scheduling tied to their booking calendar. Recurring clients receive priority scheduling and a consistent team."
+    question: "What makes your cleaning safe for children and daycares?",
+    answer: "We use child-safe and pet-friendly cleaning products that effectively sanitize without leaving toxic residues or harsh chemical odors. This is perfect for preschools, daycare centers, and family homes with young children."
   },
   {
-    question: "What makes L&J Prestige different from franchise cleaning companies?",
-    answer: "L&J Prestige is family-owned and operated by Letty and Jozette — two co-founders who personally oversee every job. Unlike franchises with rotating staff and markup pricing, we offer direct co-founder accountability, bilingual service in English and Spanish, child-safe eco products, and a price-beat guarantee. No franchise markups, no shortcuts."
+    question: "What is your primary office location and service area?",
+    answer: "Our home office is located at 7324 W Ohio Ave Apt 204, Lakewood, CO 80226. We proudly serve the entire Colorado Front Range, including Lakewood, Denver Metro, Castle Rock, Pueblo, Colorado Springs, and surrounding communities."
   },
   {
-    question: "Do you offer post-construction or move-out cleaning?",
-    answer: "Yes, we specialize in post-construction cleanup, renovation debris removal, and move-out deep cleaning. These services are available for both residential and commercial properties across Colorado Springs and Denver Metro."
+    question: "Do you clean fireplaces, wood stoves, and chimneys?",
+    answer: "Yes! We specialize in cleaning and inspecting fireplaces, wood-burning stoves, pellet stoves, oil-fired chimneys, and stove pipes. We ensure they are soot-free and safe to operate during cold Colorado winters."
   },
   {
-    question: "Is bilingual (Spanish) service available?",
-    answer: "Yes! Co-founder Letty is fully bilingual and coordinates all job details directly in Spanish. We proudly serve Colorado's Spanish-speaking communities with clear, direct communication. Letty habla Español para coordinar cada detalle."
+    question: "What is the 'We Beat Any Price' guarantee?",
+    answer: "Bring us any written estimate from a licensed competitor in Colorado. We will match or beat the quote while delivering our co-founder-backed, high-end quality standard."
   },
   {
-    question: "How do I book an Airbnb turnover cleaning in Colorado Springs?",
-    answer: "Call or text Letty at 719-250-1717 or submit our online estimate form. We sync with your Airbnb calendar, handle same-day checkout resets, wash and stage linens, restock amenities, perform damage checks, and send photographic updates after every turnover."
+    question: "Do you handle post-construction and renovation cleanups?",
+    answer: "Absolutely. We offer complete post-construction cleanup. This includes fine dust elimination, paint and adhesive removal, wall and ceiling washing, acoustic tile cleaning, and debris removal to make the property ready for occupancy."
   }
 ];
-
