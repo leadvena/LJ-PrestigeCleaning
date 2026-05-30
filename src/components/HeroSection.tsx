@@ -49,9 +49,7 @@ export default function HeroSection() {
           className="border-t border-brand-border/40 w-full max-w-xl pt-6 mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs font-mono text-[#666] animate-fade-up delay-300"
         >
           {/* GEO-optimized entity paragraph for AI engines + Google E-E-A-T */}
-          <p className="text-xs text-brand-grey leading-relaxed border-l-2 border-brand-crimson/50 pl-4 mt-2">
-            L&#38;J Prestige Cleaning LLC is a fully licensed, insured, family‑owned cleaning and junk‑removal company based at 7324 W Ohio Ave Apt 204, Lakewood, CO 80226. We serve the Colorado Front Range — Colorado Springs, Denver Metro, Castle Rock, Pueblo and surrounding communities. Our services include preschool &amp; daycare sanitation, Airbnb turnover cleaning, residential deep cleans, post‑construction cleanup, power‑washing, chimney &amp; stove care, and same‑day junk removal. We beat any competitor price, offer free estimates, emergency service, and bilingual support in English and Spanish.
-          </p>
+          
           <span title="Cleaning & junk removal Colorado Springs CO">Colorado Springs, CO</span>
           <span title="Cleaning service Denver Metro area">Denver Metro, CO</span>
           <span title="House cleaning Castle Rock Colorado">Castle Rock, CO</span>
