@@ -13,6 +13,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [currentAnnouncementIndex, setCurrentAnnouncementIndex] = useState(0);
 
   useEffect(() => {
     const onScroll = () => {
@@ -34,27 +35,79 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentAnnouncementIndex((prev) => (prev + 1) % 3);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   const scrollTo = (id: string) => {
     setIsOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const prevIndex = (currentAnnouncementIndex - 1 + 3) % 3;
+
+  const announcements = [
+    {
+      type: "family",
+      element: (
+        <span className="flex items-center gap-1.5 text-brand-crimson">
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-crimson animate-pulse-glow"></span>
+          Small Family-Owned
+        </span>
+      ),
+    },
+    {
+      type: "license",
+      element: <span className="text-brand-offwhite">100% Licensed &amp; Insured</span>,
+    },
+    {
+      type: "locations",
+      element: (
+        <span className="text-brand-grey text-center px-4 leading-normal">
+          Colorado Springs · Denver · Pueblo · Castle Rock
+        </span>
+      ),
+    },
+  ];
 
   return (
     <>
       {/* ── Announcement Strip ── */}
       <div
         style={{ background: "rgba(179,0,0,0.08)", borderBottom: "1px solid rgba(179,0,0,0.15)" }}
-        className="fixed top-0 left-0 right-0 z-[60] py-2 px-4"
+        className="fixed top-0 left-0 right-0 z-[60] py-2 px-4 h-[33px] flex items-center justify-center"
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-center gap-6 text-[10px] font-sans tracking-[0.15em] font-semibold uppercase">
+        {/* Desktop View (sm and above): static side-by-side */}
+        <div className="hidden sm:flex max-w-7xl mx-auto items-center justify-center gap-6 text-[10px] font-sans tracking-[0.15em] font-semibold uppercase">
           <span className="flex items-center gap-1.5 text-brand-crimson">
             <span className="w-1.5 h-1.5 rounded-full bg-brand-crimson animate-pulse-glow"></span>
             Small Family-Owned
           </span>
-          <span className="text-brand-grey-dark hidden sm:inline">|</span>
-          <span className="text-brand-offwhite hidden sm:inline">100% Licensed &amp; Insured</span>
+          <span className="text-brand-grey-dark">|</span>
+          <span className="text-brand-offwhite">100% Licensed &amp; Insured</span>
           <span className="text-brand-grey-dark hidden md:inline">|</span>
           <span className="text-brand-grey hidden md:inline">Colorado Springs · Denver · Pueblo · Castle Rock</span>
+        </div>
+
+        {/* Mobile View (xs/below sm): elegant rolling slide/fade transition */}
+        <div className="flex sm:hidden w-full items-center justify-center text-[10px] font-sans tracking-[0.15em] font-semibold uppercase relative h-full overflow-hidden">
+          {announcements.map((announcement, idx) => (
+            <div
+              key={announcement.type}
+              className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-in-out ${
+                idx === currentAnnouncementIndex
+                  ? "opacity-100 translate-y-0"
+                  : idx === prevIndex
+                  ? "opacity-0 -translate-y-2 pointer-events-none"
+                  : "opacity-0 translate-y-2 pointer-events-none"
+              }`}
+            >
+              {announcement.element}
+            </div>
+          ))}
         </div>
       </div>
 
